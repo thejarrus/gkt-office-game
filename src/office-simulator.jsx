@@ -4,6 +4,46 @@ const GAME_WIDTH = 480;
 const GAME_HEIGHT = 800;
 
 // =========================================
+// UNIFIED THEME — Binding Middle Tone
+// =========================================
+const THEME = {
+  // Surfaces (warmed GitHub dark)
+  bgDeep: '#10141a',
+  bgSurface: '#181d26',
+  bgElevated: '#222833',
+  bgHover: '#2a3040',
+  // Borders
+  borderDefault: '#333a47',
+  borderSubtle: '#262d38',
+  // Text
+  textPrimary: '#d0d7e0',
+  textSecondary: '#8a929c',
+  textMuted: '#4a5160',
+  // Semantic accents
+  blue: '#58a6ff',
+  green: '#3fb950',
+  yellow: '#d29922',
+  red: '#f85149',
+  gold: '#f1c40f',
+  // Brand warm
+  brandPrimary: '#c04a42',
+  brandDark: '#8b2828',
+  brandGlow: 'rgba(192,74,66,0.4)',
+  warmSurface: '#1e1518',
+  warmBorder: '#3d2528',
+  // Radii
+  rSm: 6,
+  rMd: 10,
+  rLg: 14,
+  rXl: 18,
+  // Overlays
+  overlay55: 'rgba(16,20,26,0.55)',
+  overlay75: 'rgba(16,20,26,0.75)',
+  overlay88: 'rgba(16,20,26,0.88)',
+  overlay92: 'rgba(16,20,26,0.92)',
+};
+
+// =========================================
 // MAGAZA ESYALARI
 // =========================================
 const SHOP_ITEMS = [
@@ -26,7 +66,7 @@ const DEPARTMENTS = [
     color: "#6366f1",
     colorDark: "#4f46e5",
     desc: "Dijital dünya senin oyun alanın. Web geliştirme, sosyal medya yönetimi, grafik tasarım ve teknik altyapı.",
-    skills: "Bug Fix · Logo Tasarım · Quiz · Sıralama · Hafıza · Kablo Bağlama · Dosya Sıralama · Hizalama",
+    skills: "Bug Fix · Logo Tasarım · Logo Hizalama · Kablo Bağlama · Quiz",
     available: true,
   },
   {
@@ -36,8 +76,8 @@ const DEPARTMENTS = [
     color: "#10b981",
     colorDark: "#059669",
     desc: "İnsanlarla iletişim en güçlü yanın. Üye memnuniyeti ve topluluk büyütme.",
-    skills: "Yakında...",
-    available: false,
+    skills: "Hafıza Eşleştirme · Dosya Sıralama · Quiz",
+    available: true,
   },
   {
     id: "corporate",
@@ -46,8 +86,8 @@ const DEPARTMENTS = [
     color: "#f59e0b",
     colorDark: "#d97706",
     desc: "Sponsorlar, partnerler ve dış ilişkiler. GP ve prestij kazanma uzmanı.",
-    skills: "Yakında...",
-    available: false,
+    skills: "Süreci Sırala · Spam Temizliği · Quiz",
+    available: true,
   },
   {
     id: "events_org",
@@ -56,8 +96,8 @@ const DEPARTMENTS = [
     color: "#ef4444",
     colorDark: "#dc2626",
     desc: "Etkinlik planlama ve organizasyon. Kaliteli etkinlikler düzenle.",
-    skills: "Yakında...",
-    available: false,
+    skills: "Klima Ayarla · Süreci Sırala · Quiz",
+    available: true,
   },
 ];
 
@@ -65,61 +105,86 @@ const DEPARTMENTS = [
 // ZİYARETÇİ TİPLERİ
 // =========================================
 const CHARACTERS = [
-  { displayName: "Ekin", sprite: "/assets/dummies/ekin_neutral.png" },
-  { displayName: "Berrin", sprite: "/assets/dummies/berrin_neutral.png" },
-  { displayName: "Ementü", sprite: "/assets/dummies/ementu_neutral.png" },
+  { displayName: "Ekin", sprite: "/assets/dummies/ekin/ekin_neutral.png", spriteHappy: "/assets/dummies/ekin/ekin_happy.png", spriteUnhappy: "/assets/dummies/ekin/ekin_unhappy.png" },
+  { displayName: "Berrin", sprite: "/assets/dummies/berrin/berrin_neutral.png", spriteHappy: "/assets/dummies/berrin/berrin_happy.png", spriteUnhappy: "/assets/dummies/berrin/berrin_unhappy.png" },
+  { displayName: "Ementü", sprite: "/assets/dummies/ementu/ementu_neutral.png", spriteHappy: "/assets/dummies/ementu/ementu_happy.png", spriteUnhappy: "/assets/dummies/ementu/ementu_unhappy.png" },
+  { displayName: "Merve", sprite: "/assets/dummies/merve/merve_neutral.png", spriteHappy: "/assets/dummies/merve/merve_happy.png", spriteUnhappy: "/assets/dummies/merve/merve_unhappy.png" },
 ];
 
 const CUSTOMER_TYPES = [
+  // 🖥️ Medya ve IT
   {
-    id: "student", name: "Öğrenci", color: "#9b59b6",
+    id: "student", name: "Öğrenci", color: "#9b59b6", dept: "media_it",
     requests: ["Web sitem çöktü!", "Final projem patladı!", "Database silindi..."],
     gameType: "BUG_FIX",
   },
   {
-    id: "sponsor", name: "Sponsor", color: "#f1c40f",
+    id: "sponsor", name: "Sponsor", color: "#f1c40f", dept: "media_it",
     requests: ["Logomuzu büyütelim.", "Renkleri canlı yapalım.", "Yatırım görüşmesi?"],
     gameType: "DESIGN_CLICK",
   },
   {
-    id: "intern", name: "Stajyer", color: "#2ecc71",
-    requests: ["Bu kod ne işe yarıyor?", "React mi Vue mu?", "Kahve nasıl yapılır?"],
-    gameType: "QUIZ",
-  },
-  {
-    id: "coordinator", name: "Koordinatör", color: "#e67e22",
-    requests: ["Süreçleri organize et!", "Proje akışını düzenle.", "Adımları sırala!"],
-    gameType: "DRAG_DROP",
-  },
-  {
-    id: "researcher", name: "Araştırmacı", color: "#3498db",
-    requests: ["Verileri eşleştir!", "Kaynakları bul!", "Bağlantıları keşfet!"],
-    gameType: "MEMORY_MATCH",
-  },
-  {
-    id: "technician", name: "Teknisyen", color: "#2c3e50",
-    requests: ["Sunucu odasını bağla!", "Kabloları düzenle!", "Ağı kur!"],
-    gameType: "WIRE_CONNECT",
-  },
-  {
-    id: "organizer", name: "Organizatör", color: "#e67e22",
-    requests: ["Slaytlar karışmış, toparla!", "Faturaları sıraya koy!", "Dosyaları düzenle!"],
-    gameType: "SORT_FILES",
-  },
-  {
-    id: "designer", name: "Tasarımcı", color: "#1abc9c",
+    id: "designer", name: "Tasarımcı", color: "#1abc9c", dept: "media_it",
     requests: ["Logoyu afişe ortala!", "Tasarımı hizala!", "Banneri ortala!"],
     gameType: "ALIGN_LOGO",
   },
   {
-    id: "sysadmin", name: "Sistem Admin", color: "#e74c3c",
+    id: "technician", name: "Teknisyen", color: "#2c3e50", dept: "media_it",
+    requests: ["Sunucu odasını bağla!", "Kabloları düzenle!", "Ağı kur!"],
+    gameType: "WIRE_CONNECT",
+  },
+  {
+    id: "it_intern", name: "IT Stajyeri", color: "#6366f1", dept: "media_it",
+    requests: ["Bu kod ne işe yarıyor?", "React mi Vue mu?", "Framework hangisi?"],
+    gameType: "QUIZ",
+  },
+  // 👥 Üye İlişkileri
+  {
+    id: "researcher", name: "Araştırmacı", color: "#3498db", dept: "member_rel",
+    requests: ["Verileri eşleştir!", "Kaynakları bul!", "Bağlantıları keşfet!"],
+    gameType: "MEMORY_MATCH",
+  },
+  {
+    id: "organizer", name: "Organizatör", color: "#e67e22", dept: "member_rel",
+    requests: ["Slaytlar karışmış, toparla!", "Faturaları sıraya koy!", "Dosyaları düzenle!"],
+    gameType: "SORT_FILES",
+  },
+  {
+    id: "member_rep", name: "Üye Temsilcisi", color: "#10b981", dept: "member_rel",
+    requests: ["Yeni üye oryantasyonu var!", "Üye anketi sonuçları ne?", "Topluluk kuralları neydi?"],
+    gameType: "QUIZ",
+  },
+  // 💼 Kurumsal İlişkiler
+  {
+    id: "coordinator", name: "Koordinatör", color: "#e67e22", dept: "corporate",
+    requests: ["Süreçleri organize et!", "Proje akışını düzenle!", "Adımları sırala!"],
+    gameType: "DRAG_DROP",
+  },
+  {
+    id: "sysadmin", name: "Sistem Admin", color: "#e74c3c", dept: "corporate",
     requests: ["Mail kutusu spam dolmuş!", "Virüs saldırısı var!", "Inbox'u temizle acil!"],
     gameType: "SPAM_CLEANUP",
   },
   {
-    id: "electrician", name: "Elektrikçi", color: "#e67e22",
+    id: "corp_rep", name: "Kurumsal Temsilci", color: "#f59e0b", dept: "corporate",
+    requests: ["Sponsor sunumu hazırla!", "Protokol kuralları ne?", "Bütçe raporu lazım!"],
+    gameType: "QUIZ",
+  },
+  // 🎪 Etkinlik ve Organizasyon
+  {
+    id: "electrician", name: "Elektrikçi", color: "#e67e22", dept: "events_org",
     requests: ["Klima bozuldu ayarla!", "Klima çıldırdı!", "Sıcaklığı düzelt acil!"],
     gameType: "AC_ADJUST",
+  },
+  {
+    id: "event_planner", name: "Etkinlik Planlayıcı", color: "#ef4444", dept: "events_org",
+    requests: ["Etkinlik programını sırala!", "Sahne düzenini kur!", "Konuşmacıları planla!"],
+    gameType: "DRAG_DROP",
+  },
+  {
+    id: "event_host", name: "Etkinlik Sunucusu", color: "#ec4899", dept: "events_org",
+    requests: ["Salon kapasitesi kaç?", "Etkinlik bütçesi ne?", "Sahne planı nasıl?"],
+    gameType: "QUIZ",
   },
 ];
 
@@ -251,26 +316,56 @@ const generateRival = (playerScore, season, playerStats) => {
 };
 
 // =========================================
-// QUIZ SORU HAVUZU
+// QUIZ SORU HAVUZLARI (Departmana göre)
 // =========================================
-const QUIZ_POOL = [
-  // Yazilim & Teknik
-  { q: "React'te state değiştirmek için ne kullanılır?", opts: ["useState", "useEffect", "div"], answer: "useState" },
-  { q: "CSS'te bir elementi ortalamak için?", opts: ["display: flex", "display: table", "display: none"], answer: "display: flex" },
-  { q: "JavaScript'te dizi uzunluğu?", opts: [".length", ".size()", ".count"], answer: ".length" },
-  { q: "HTML'de en büyük başlık etiketi?", opts: ["<h1>", "<h6>", "<big>"], answer: "<h1>" },
-  { q: "Git'te değişiklikleri kaydetmek?", opts: ["git commit", "git save", "git push"], answer: "git commit" },
-  { q: "JSON ne demek?", opts: ["JavaScript Object Notation", "Java System Output", "Joint Server Node"], answer: "JavaScript Object Notation" },
-  { q: "Hangisi bir C# değişken türüdür?", opts: ["int", "let", "var"], answer: "int" },
-  { q: "Unity oyun motoru hangi dili kullanır?", opts: ["C#", "Python", "Java"], answer: "C#" },
-  { q: "HTTP 404 hatası ne anlama gelir?", opts: ["Bulunamadı", "Sunucu Hatası", "Başarılı"], answer: "Bulunamadı" },
-  { q: "Hangisi bir veritabanı türüdür?", opts: ["MongoDB", "ReactDB", "NodeDB"], answer: "MongoDB" },
-  // Girisimcilik & GKT
-  { q: "MVP neyin kısaltmasıdır?", opts: ["Minimum Viable Product", "Most Valuable Player", "Maximum Viral Post"], answer: "Minimum Viable Product" },
-  { q: "Bir girişimin kısa sunumuna ne denir?", opts: ["Elevator Pitch", "Stair Speech", "Roof Talk"], answer: "Elevator Pitch" },
-  { q: "Girişimci kime çözüm üretir?", opts: ["Müşteriye", "Yatırımcıya", "Kendisine"], answer: "Müşteriye" },
-  { q: "B2B ne demektir?", opts: ["Business to Business", "Back to Back", "Business to Boss"], answer: "Business to Business" },
-];
+const QUIZ_POOLS = {
+  // 🖥️ Medya ve IT
+  media_it: [
+    { q: "React'te state değiştirmek için ne kullanılır?", opts: ["useState", "useEffect", "div"], answer: "useState" },
+    { q: "CSS'te bir elementi ortalamak için?", opts: ["display: flex", "display: table", "display: none"], answer: "display: flex" },
+    { q: "JavaScript'te dizi uzunluğu?", opts: [".length", ".size()", ".count"], answer: ".length" },
+    { q: "HTML'de en büyük başlık etiketi?", opts: ["<h1>", "<h6>", "<big>"], answer: "<h1>" },
+    { q: "Git'te değişiklikleri kaydetmek?", opts: ["git commit", "git save", "git push"], answer: "git commit" },
+    { q: "JSON ne demek?", opts: ["JavaScript Object Notation", "Java System Output", "Joint Server Node"], answer: "JavaScript Object Notation" },
+    { q: "HTTP 404 hatası ne anlama gelir?", opts: ["Bulunamadı", "Sunucu Hatası", "Başarılı"], answer: "Bulunamadı" },
+    { q: "Hangisi bir veritabanı türüdür?", opts: ["MongoDB", "ReactDB", "NodeDB"], answer: "MongoDB" },
+    { q: "Hangisi bir programlama dili değildir?", opts: ["Photoshop", "Python", "JavaScript"], answer: "Photoshop" },
+    { q: "SEO ne demektir?", opts: ["Arama Motoru Optimizasyonu", "Sosyal Erişim Oranı", "Site Erişim Ortamı"], answer: "Arama Motoru Optimizasyonu" },
+  ],
+  // 👥 Üye İlişkileri
+  member_rel: [
+    { q: "Topluluk yönetiminde en önemli şey?", opts: ["İletişim", "Bütçe", "Logo"], answer: "İletişim" },
+    { q: "Yeni üye oryantasyonunda ilk adım?", opts: ["Tanışma", "Aidat toplama", "Görev verme"], answer: "Tanışma" },
+    { q: "Üye memnuniyet anketi ne işe yarar?", opts: ["Geri bildirim almak", "Üye çıkarmak", "Bütçe planlamak"], answer: "Geri bildirim almak" },
+    { q: "Bir topluluğu büyütmenin en iyi yolu?", opts: ["Değer sunmak", "Reklam vermek", "Zorunlu üyelik"], answer: "Değer sunmak" },
+    { q: "Üye iletişiminde hangi kanal en etkili?", opts: ["Yüz yüze", "Faks", "Mektup"], answer: "Yüz yüze" },
+    { q: "Takım çalışmasında en önemli beceri?", opts: ["Empati", "Rekabet", "Hız"], answer: "Empati" },
+    { q: "Topluluk etkinliğine katılım nasıl artırılır?", opts: ["İlgi çekici içerik", "Ceza sistemi", "Zorunlu katılım"], answer: "İlgi çekici içerik" },
+    { q: "Gönüllülük motivasyonu nereden gelir?", opts: ["Aidiyet hissi", "Maddi kazanç", "Zorunluluk"], answer: "Aidiyet hissi" },
+  ],
+  // 💼 Kurumsal İlişkiler
+  corporate: [
+    { q: "B2B ne demektir?", opts: ["Business to Business", "Back to Back", "Business to Boss"], answer: "Business to Business" },
+    { q: "MVP neyin kısaltmasıdır?", opts: ["Minimum Viable Product", "Most Valuable Player", "Maximum Viral Post"], answer: "Minimum Viable Product" },
+    { q: "Bir girişimin kısa sunumuna ne denir?", opts: ["Elevator Pitch", "Stair Speech", "Roof Talk"], answer: "Elevator Pitch" },
+    { q: "Sponsor ilişkisinde en önemli şey?", opts: ["Karşılıklı fayda", "Sadece para", "Logo büyüklüğü"], answer: "Karşılıklı fayda" },
+    { q: "Kurumsal mail nasıl biter?", opts: ["Saygılarımla", "Görüşürüz", "BB"], answer: "Saygılarımla" },
+    { q: "Profesyonel bir sunumda ilk ne yapılır?", opts: ["Kendini tanıtma", "Fiyat söyleme", "Demo gösterme"], answer: "Kendini tanıtma" },
+    { q: "KPI ne demektir?", opts: ["Anahtar Performans Göstergesi", "Kurumsal Plan İndeksi", "Kalite Puanı"], answer: "Anahtar Performans Göstergesi" },
+    { q: "Networking etkinliğinde ne yapılır?", opts: ["İlişki kurmak", "Satış yapmak", "CV dağıtmak"], answer: "İlişki kurmak" },
+  ],
+  // 🎪 Etkinlik ve Organizasyon
+  events_org: [
+    { q: "Etkinlik planlamasında ilk adım?", opts: ["Hedef belirlemek", "Mekan kiralamak", "Afiş bastırmak"], answer: "Hedef belirlemek" },
+    { q: "Bir etkinlikte moderatörün görevi?", opts: ["Yönetmek", "Yemek sipariş etmek", "Bilet satmak"], answer: "Yönetmek" },
+    { q: "Etkinlik bütçesinde en büyük kalem genelde?", opts: ["Mekan", "Kalem", "Kırtasiye"], answer: "Mekan" },
+    { q: "Panel ile workshop arasındaki fark?", opts: ["Panel izlenir, workshop yapılır", "Aynı şey", "Panel uzun, workshop kısa"], answer: "Panel izlenir, workshop yapılır" },
+    { q: "Etkinlik sonrası ne yapılmalı?", opts: ["Geri bildirim toplamak", "Hemen unutmak", "Sadece kutlamak"], answer: "Geri bildirim toplamak" },
+    { q: "Sahne düzeninde en önemli unsur?", opts: ["Görünürlük", "Renk", "Müzik"], answer: "Görünürlük" },
+    { q: "Etkinlik tanıtımında en etkili yöntem?", opts: ["Sosyal medya", "Gazete ilanı", "Kapı kapı dolaşmak"], answer: "Sosyal medya" },
+    { q: "Konuşmacı için ideal sunum süresi?", opts: ["15-20 dakika", "2 saat", "5 dakika"], answer: "15-20 dakika" },
+  ],
+};
 
 // =========================================
 // BUG FIX — KOD SATIRLARI VE HATALAR
@@ -427,6 +522,56 @@ const CARD_THEMES = [
 ];
 
 // =========================================
+// BAŞARI PİRİLTİ EFEKTİ (Sparkle SVG)
+// =========================================
+const SparkleEffect = () => (
+  <svg width="60" height="60" viewBox="0 0 60 60" style={{
+    position: "absolute", top: 30, left: "50%", marginLeft: 40, zIndex: 50,
+    animation: "sparkleAnim 0.8s ease-out forwards",
+    pointerEvents: "none",
+  }}>
+    <path d="M30 5 L33 22 L50 18 L36 28 L45 45 L30 34 L15 45 L24 28 L10 18 L27 22 Z"
+      fill="#f1c40f" opacity="0.9">
+      <animate attributeName="opacity" values="0;1;0.8" dur="0.6s" fill="freeze" />
+    </path>
+    <circle cx="12" cy="8" r="2.5" fill="#fff" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="0.5s" begin="0.1s" fill="freeze" />
+    </circle>
+    <circle cx="50" cy="10" r="2" fill="#fff" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="0.5s" begin="0.2s" fill="freeze" />
+    </circle>
+    <circle cx="8" cy="38" r="1.5" fill="#f1c40f" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="0.4s" begin="0.15s" fill="freeze" />
+    </circle>
+    <circle cx="52" cy="42" r="2" fill="#f1c40f" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="0.4s" begin="0.25s" fill="freeze" />
+    </circle>
+  </svg>
+);
+
+// =========================================
+// BAŞARISIZLIK ÖFKELİ İŞARET (Anger Mark SVG — anime tarzı #)
+// =========================================
+const AngerMark = () => (
+  <svg width="36" height="36" viewBox="0 0 36 36" style={{
+    position: "absolute", top: 35, left: "50%", marginLeft: 40, zIndex: 50,
+    animation: "angerPop 0.4s ease-out forwards",
+    pointerEvents: "none",
+  }}>
+    <g stroke="#e74c3c" strokeWidth="3.5" strokeLinecap="round" opacity="0.95">
+      <line x1="8" y1="6" x2="16" y2="14" />
+      <line x1="20" y1="6" x2="28" y2="14" />
+      <line x1="8" y1="22" x2="16" y2="30" />
+      <line x1="20" y1="22" x2="28" y2="30" />
+      <line x1="14" y1="10" x2="22" y2="10" />
+      <line x1="14" y1="26" x2="22" y2="26" />
+      <line x1="10" y1="14" x2="10" y2="22" />
+      <line x1="26" y1="14" x2="26" y2="22" />
+    </g>
+  </svg>
+);
+
+// =========================================
 // WIRE CONNECT — KABLO RENKLERİ
 // =========================================
 const WIRE_COLORS = ["#f85149", "#3fb950", "#58a6ff", "#d29922", "#bc8cff", "#f78166"];
@@ -436,39 +581,39 @@ const WIRE_COLORS = ["#f85149", "#3fb950", "#58a6ff", "#d29922", "#bc8cff", "#f7
 // =========================================
 const WIRE_SETS = [
   {
-    title: "Sunucu Odasını Bağla",
-    pairs: [
-      { left: "🖥️ Sunucu", right: "🌐 Router" },
-      { left: "💾 Depolama", right: "🔌 UPS" },
-      { left: "📡 Modem", right: "📺 Monitör" },
-      { left: "🖨️ Yazıcı", right: "💻 PC" },
-    ],
-  },
-  {
-    title: "Etkinlik Sahnesini Kur",
+    title: "Etkinlik Hazırlığı",
     pairs: [
       { left: "🎤 Mikrofon", right: "🔊 Hoparlör" },
-      { left: "📽️ Projeksiyon", right: "💻 Laptop" },
-      { left: "🎥 Kamera", right: "📺 Ekran" },
-      { left: "💡 Işık", right: "🔌 Priz" },
-    ],
-  },
-  {
-    title: "Ofis Ağını Kur",
-    pairs: [
-      { left: "💻 Bilgisayar", right: "🌐 İnternet" },
-      { left: "🖨️ Yazıcı", right: "📡 Wi-Fi" },
-      { left: "📱 Telefon", right: "🔌 Şarj" },
-      { left: "🖥️ Monitör", right: "💻 Kasa" },
-    ],
-  },
-  {
-    title: "Stüdyoyu Hazırla",
-    pairs: [
-      { left: "🎙️ Mikrofon", right: "🎧 Kulaklık" },
-      { left: "🎸 Gitar", right: "🔊 Amfi" },
-      { left: "🎹 Klavye", right: "💻 DAW" },
+      { left: "📽️ Projeksiyon", right: "🖥️ Laptop" },
       { left: "📷 Kamera", right: "💡 Işık" },
+      { left: "🪑 Sandalye", right: "🪧 Masa" },
+    ],
+  },
+  {
+    title: "Ofis Sabahı",
+    pairs: [
+      { left: "☕ Kahve", right: "🍵 Bardak" },
+      { left: "🖨️ Yazıcı", right: "📄 Kağıt" },
+      { left: "💻 Laptop", right: "🔌 Şarj" },
+      { left: "📱 Telefon", right: "🎧 Kulaklık" },
+    ],
+  },
+  {
+    title: "Sosyal Medya İçerik",
+    pairs: [
+      { left: "📸 Fotoğraf", right: "📱 Instagram" },
+      { left: "🎬 Video", right: "▶️ YouTube" },
+      { left: "✍️ Yazı", right: "📝 Blog" },
+      { left: "🎨 Tasarım", right: "🖼️ Canva" },
+    ],
+  },
+  {
+    title: "Kariyer Fuarı",
+    pairs: [
+      { left: "👔 CV", right: "💼 Şirket" },
+      { left: "🎤 Sunum", right: "📊 Slayt" },
+      { left: "🤝 Sponsor", right: "💰 Bütçe" },
+      { left: "📧 Davet", right: "👥 Katılımcı" },
     ],
   },
 ];
@@ -558,8 +703,13 @@ function BugFixGame({ difficulty, ownedItems = [], onComplete, onFail }) {
   const [score, setScore] = useState(0);
   const [wrongFlash, setWrongFlash] = useState(null);
   const [scrollY, setScrollY] = useState(0);
+  const [shakeKey, setShakeKey] = useState(0);
+  const [burstLineId, setBurstLineId] = useState(null);
+  const [screenFlash, setScreenFlash] = useState(false);
   const totalBugs = codeSet.lines.filter((l) => l.bug).length;
   const timerRef = useRef(null);
+  const burstTimer = useRef(null);
+  const flashTimer = useRef(null);
 
   // Zamanlayici
   useEffect(() => {
@@ -593,6 +743,13 @@ function BugFixGame({ difficulty, ownedItems = [], onComplete, onFail }) {
       if (line.found) return;
       if (line.bug) {
         setLines((prev) => prev.map((l) => (l.id === line.id ? { ...l, found: true, code: l.fix } : l)));
+        clearTimeout(burstTimer.current);
+        clearTimeout(flashTimer.current);
+        setBurstLineId(line.id);
+        burstTimer.current = setTimeout(() => setBurstLineId(null), 600);
+        setShakeKey((k) => k + 1);
+        setScreenFlash(true);
+        flashTimer.current = setTimeout(() => setScreenFlash(false), 400);
         const newScore = score + 1;
         setScore(newScore);
         if (newScore >= totalBugs) {
@@ -614,7 +771,36 @@ function BugFixGame({ difficulty, ownedItems = [], onComplete, onFail }) {
   const totalTime = baseTime + bonusTime;
 
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#0d1117", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div key={`shake-${shakeKey}`} style={{ position: "absolute", inset: 0, background: "#0d1117", display: "flex", flexDirection: "column", overflow: "hidden", animation: shakeKey > 0 ? "screenShake 0.35s ease-out" : "none" }}>
+      <style>{`
+        @keyframes screenShake {
+          0%, 100% { transform: translate(0, 0); }
+          10% { transform: translate(-3.75px, 1.5px); }
+          25% { transform: translate(3.75px, -2.25px); }
+          40% { transform: translate(-3px, 2.25px); }
+          55% { transform: translate(3px, -1.5px); }
+          70% { transform: translate(-1.5px, 1.5px); }
+          85% { transform: translate(1.5px, -0.75px); }
+        }
+        @keyframes bugBurst {
+          0% { opacity: 0.75; transform: scale(1); }
+          40% { opacity: 0.6; transform: scale(2.5); }
+          100% { opacity: 0; transform: scale(4); }
+        }
+        @keyframes screenFlash {
+          0% { opacity: 0.375; }
+          100% { opacity: 0; }
+        }
+      `}</style>
+
+      {/* Yeşil ekran flash overlay */}
+      {screenFlash && (
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 50, pointerEvents: "none",
+          background: "rgba(63,185,80,0.11)",
+          animation: "screenFlash 0.4s ease-out forwards",
+        }} />
+      )}
       {/* Ust bar — Windows tarzı başlık çubuğu */}
       <div style={{ background: "#1e2430", padding: "6px 10px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #30363d", flexShrink: 0 }}>
         <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
@@ -714,6 +900,7 @@ function BugFixGame({ difficulty, ownedItems = [], onComplete, onFail }) {
                 style={{
                   display: "flex", alignItems: "center", padding: "4px 8px 4px 4px",
                   cursor: "pointer", height: 30, transition: "background 0.15s",
+                  position: "relative",
                   background: isWrong
                     ? "rgba(248,81,73,0.25)"
                     : isFixed
@@ -724,10 +911,20 @@ function BugFixGame({ difficulty, ownedItems = [], onComplete, onFail }) {
                   borderLeft: isFixed ? "3px solid #3fb950" : isBug ? "3px solid transparent" : "3px solid transparent",
                 }}
               >
+                {burstLineId === line.id && (
+                  <div style={{
+                    position: "absolute",
+                    top: "-200%", left: "-50%", right: "-50%", bottom: "-200%",
+                    pointerEvents: "none",
+                    zIndex: 10,
+                    background: "radial-gradient(circle at center, rgba(63,185,80,0.525) 0%, rgba(63,185,80,0.225) 30%, transparent 60%)",
+                    animation: "bugBurst 0.6s ease-out forwards",
+                  }} />
+                )}
                 {/* Satir numarasi */}
                 <div
                   style={{
-                    width: 36, textAlign: "right", paddingRight: 8,
+                    width: 36, display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: 10, color: "#484f58", fontFamily: "monospace",
                     flexShrink: 0, userSelect: "none",
                   }}
@@ -1220,24 +1417,34 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
   const [connections, setConnections] = useState({});
   const [dragging, setDragging] = useState(null);
   const [timeLeft, setTimeLeft] = useState(baseTime);
-  const [result, setResult] = useState(null);
-  const [wrongPairs, setWrongPairs] = useState([]);
+  const [lockedPairs, setLockedPairs] = useState({});
+  const [flashWrong, setFlashWrong] = useState(null);
+  const [timePenalty, setTimePenalty] = useState(false);
+  const [snapPort, setSnapPort] = useState(null);
+  const [cascading, setCascading] = useState(false);
+  const [cascadeStep, setCascadeStep] = useState(-1);
   const leftRefs = useRef([]);
   const rightRefs = useRef([]);
+  const rightBoxRefs = useRef([]);
   const timerRef = useRef(null);
   const containerRef = useRef(null);
   const wireAreaRef = useRef(null);
 
+  const failedRef = useRef(false);
   useEffect(() => {
-    if (result) return;
+    if (cascading) return;
     timerRef.current = setInterval(() => {
       setTimeLeft(t => {
-        if (t <= 1) { clearInterval(timerRef.current); onFail(); return 0; }
+        if (t <= 1) {
+          clearInterval(timerRef.current);
+          if (!failedRef.current) { failedRef.current = true; setTimeout(() => onFail(), 0); }
+          return 0;
+        }
         return t - 1;
       });
     }, 1000);
     return () => clearInterval(timerRef.current);
-  }, [onFail, result]);
+  }, [onFail, cascading]);
 
   const getScale = useCallback((el) => {
     if (!el) return 1;
@@ -1257,7 +1464,9 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
 
   const handleLeftStart = (idx, e) => {
     e.preventDefault();
-    if (connections[idx] !== undefined) {
+    if (lockedPairs[idx] !== undefined) return;
+    if (cascading) return;
+    if (connections[idx] !== undefined && lockedPairs[idx] === undefined) {
       setConnections(prev => {
         const next = { ...prev };
         delete next[idx];
@@ -1274,6 +1483,21 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
       curX: (touch.clientX - cRect.left) / s,
       curY: (touch.clientY - cRect.top) / s,
     });
+  };
+
+  const handleRightStart = (rightIdx, e) => {
+    e.preventDefault();
+    if (cascading) return;
+    const connectedFrom = Object.entries(connections).find(([, v]) => v === rightIdx);
+    if (connectedFrom) {
+      const leftIdx = Number(connectedFrom[0]);
+      if (lockedPairs[leftIdx] !== undefined) return;
+      setConnections(prev => {
+        const next = { ...prev };
+        delete next[leftIdx];
+        return next;
+      });
+    }
   };
 
   const handleMove = (e) => {
@@ -1299,60 +1523,116 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
     const ty = touch.clientY;
     let hitIdx = null;
     let minDist = Infinity;
-    rightRefs.current.forEach((ref, i) => {
+    rightBoxRefs.current.forEach((ref, i) => {
       if (!ref) return;
       const rect = ref.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dist = Math.hypot(tx - cx, ty - cy);
-      if (dist < 50 && dist < minDist) {
-        minDist = dist;
-        hitIdx = i;
+      if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.hypot(tx - cx, ty - cy);
+        if (dist < minDist) {
+          minDist = dist;
+          hitIdx = i;
+        }
       }
     });
+    if (hitIdx === null) {
+      rightRefs.current.forEach((ref, i) => {
+        if (!ref) return;
+        const rect = ref.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.hypot(tx - cx, ty - cy);
+        if (dist < 50 && dist < minDist) {
+          minDist = dist;
+          hitIdx = i;
+        }
+      });
+    }
 
     if (hitIdx !== null) {
-      const existing = Object.entries(connections).find(([, v]) => v === hitIdx);
-      const newConn = { ...connections };
-      if (existing) delete newConn[existing[0]];
-      newConn[dragging.from] = hitIdx;
-      setConnections(newConn);
+      const leftIdx = dragging.from;
+
+      // Bu sol port zaten kilitliyse islem yapma
+      if (lockedPairs[leftIdx] !== undefined) {
+        setDragging(null);
+        return;
+      }
+
+      // Bu sag port zaten kilitli bir kabloyla mi bagli?
+      const rightLocked = Object.values(lockedPairs).includes(hitIdx);
+      if (rightLocked) {
+        setDragging(null);
+        return;
+      }
+
+      // Dogru mu kontrol et
+      const isCorrect = set.correctMap[leftIdx] === hitIdx;
+
+      if (isCorrect) {
+        // DOGRU — kilitle + snap efekti
+        setLockedPairs(prev => ({ ...prev, [leftIdx]: hitIdx }));
+        setConnections(prev => {
+          const next = { ...prev };
+          next[leftIdx] = hitIdx;
+          return next;
+        });
+        setSnapPort({ left: leftIdx, right: hitIdx });
+        setTimeout(() => setSnapPort(null), 500);
+
+        // Tum kablolar baglandi mi?
+        const totalLocked = Object.keys(lockedPairs).length + 1;
+        if (totalLocked >= set.left.length) {
+          // CASCADE bitirisi — 300ms sonra basla
+          clearInterval(timerRef.current);
+          setTimeout(() => {
+            setCascading(true);
+            for (let i = 0; i < set.left.length; i++) {
+              setTimeout(() => setCascadeStep(i), i * 250);
+            }
+            setTimeout(() => onComplete(timeLeft), set.left.length * 250 + 400);
+          }, 300);
+        }
+      } else {
+        // YANLIS — flash + cozul + ceza
+        setConnections(prev => ({ ...prev, [leftIdx]: hitIdx }));
+        setFlashWrong(leftIdx);
+
+        // Sure cezasi (-2s)
+        setTimePenalty(true);
+        setTimeout(() => setTimePenalty(false), 800);
+        setTimeLeft(t => {
+          const next = Math.max(0, t - 2);
+          if (next <= 0) {
+            clearInterval(timerRef.current);
+            if (!failedRef.current) { failedRef.current = true; setTimeout(() => onFail(), 0); }
+          }
+          return next;
+        });
+
+        // 0.6sn sonra kabloyu coz
+        setTimeout(() => {
+          setConnections(prev => {
+            const next = { ...prev };
+            delete next[leftIdx];
+            return next;
+          });
+          setFlashWrong(null);
+        }, 600);
+      }
     }
 
     setDragging(null);
   };
 
-  const checkWires = useCallback(() => {
-    clearInterval(timerRef.current);
-    const wrong = [];
-    let allCorrect = true;
-
-    for (let i = 0; i < set.left.length; i++) {
-      if (connections[i] === undefined) {
-        wrong.push(i);
-        allCorrect = false;
-      } else if (connections[i] !== set.correctMap[i]) {
-        wrong.push(i);
-        allCorrect = false;
-      }
-    }
-
-    if (allCorrect) {
-      setResult("correct");
-      setTimeout(() => onComplete(timeLeft), 600);
-    } else {
-      setWrongPairs(wrong);
-      setResult("wrong");
-      setTimeout(() => onFail(), 800);
-    }
-  }, [connections, set, timeLeft, onComplete, onFail]);
-
   const urgent = timeLeft <= 4;
-  const allConnected = Object.keys(connections).length >= set.left.length;
 
   const makeCablePath = (x1, y1, x2, y2) => {
-    const dx = Math.abs(x2 - x1) * 0.5;
-    return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+    const dist = Math.hypot(x2 - x1, y2 - y1);
+    const tension = Math.min(0.6, Math.max(0.15, dist / 400));
+    const dx = Math.abs(x2 - x1) * tension;
+    const sag = Math.min(30, dist * 0.08);
+    return `M ${x1} ${y1} C ${x1 + dx} ${y1 + sag * 0.3}, ${x2 - dx} ${y2 + sag * 0.3}, ${x2} ${y2}`;
   };
 
   return (
@@ -1371,16 +1651,26 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
             <div style={{ fontSize: 13, fontWeight: 800, color: "#c9d1d9" }}>🔌 {set.title}</div>
             <div style={{ fontSize: 10, color: "#8b949e", marginTop: 2 }}>Kabloları doğru porta bağla!</div>
           </div>
-          <span style={{
-            fontSize: 16, fontWeight: 900,
-            color: urgent ? "#f85149" : "#58a6ff",
-            animation: urgent ? "pulse 0.5s infinite" : "none",
-          }}>⏱ {timeLeft}s</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, position: "relative" }}>
+            {timePenalty && (
+              <span style={{
+                fontSize: 13, fontWeight: 900, color: "#f85149",
+                animation: "penaltyFloat 0.8s ease-out forwards",
+                position: "absolute", right: "100%", marginRight: 4, whiteSpace: "nowrap",
+              }}>-2s</span>
+            )}
+            <span style={{
+              fontSize: 16, fontWeight: 900,
+              color: timePenalty ? "#f85149" : urgent ? "#f85149" : "#58a6ff",
+              animation: timePenalty ? "wrongShake 0.5s ease-out" : urgent ? "pulse 0.5s infinite" : "none",
+              transition: "color 0.2s",
+            }}>⏱ {timeLeft}s</span>
+          </div>
         </div>
         <div style={{ height: 4, background: "#21262d", borderRadius: 2, marginTop: 8, overflow: "hidden" }}>
           <div style={{
             height: "100%", borderRadius: 2, transition: "width 1s linear",
-            background: urgent ? "#f85149" : "linear-gradient(90deg, #58a6ff, #bc8cff)",
+            background: timePenalty ? "#f85149" : urgent ? "#f85149" : "linear-gradient(90deg, #58a6ff, #bc8cff)",
             width: `${(timeLeft / baseTime) * 100}%`,
           }} />
         </div>
@@ -1408,6 +1698,24 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
                 </feMerge>
               </filter>
             ))}
+            <filter id="wireGlowGreen" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feFlood floodColor="#3fb950" floodOpacity="0.6" result="color" />
+              <feComposite in="color" in2="blur" operator="in" result="shadow" />
+              <feMerge>
+                <feMergeNode in="shadow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <filter id="wireGlowRed" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feFlood floodColor="#f85149" floodOpacity="0.6" result="color" />
+              <feComposite in="color" in2="blur" operator="in" result="shadow" />
+              <feMerge>
+                <feMergeNode in="shadow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
 
           {/* Tamamlanmis baglantilar */}
@@ -1417,25 +1725,37 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
             if (!lRef || !rRef) return null;
             const lPos = getPos(lRef);
             const rPos = getPos(rRef);
-            const isWrong = wrongPairs.includes(Number(leftIdx));
+            const isLocked = lockedPairs[Number(leftIdx)] !== undefined;
+            const isFlashingWrong = flashWrong === Number(leftIdx);
+            const isCascadeActive = cascading && cascadeStep >= Number(leftIdx);
             const colorIdx = Number(leftIdx) % WIRE_COLORS.length;
-            const color = result === "wrong" && isWrong ? "#f85149" : result === "correct" ? "#3fb950" : WIRE_COLORS[colorIdx];
+            const color = isFlashingWrong ? "#f85149" :
+                          isCascadeActive ? "#3fb950" :
+                          isLocked ? "#3fb950" :
+                          WIRE_COLORS[colorIdx];
+            const strokeW = isCascadeActive ? 10 : 8;
+            const glowFilter = isFlashingWrong ? "url(#wireGlowRed)" :
+                               (isLocked || isCascadeActive) ? "url(#wireGlowGreen)" :
+                               `url(#wireGlow${colorIdx})`;
             return (
-              <g key={`conn-${leftIdx}`} style={{ pointerEvents: "none" }}>
+              <g key={`conn-${leftIdx}`} style={{
+                pointerEvents: "none",
+                animation: isCascadeActive ? "cascadeGlow 0.4s ease-out" : "none",
+              }}>
                 <path
                   d={makeCablePath(lPos.x, lPos.y, rPos.x, rPos.y)}
                   stroke="rgba(0,0,0,0.5)"
-                  strokeWidth={12}
+                  strokeWidth={strokeW + 4}
                   fill="none"
                   strokeLinecap="round"
                 />
                 <path
                   d={makeCablePath(lPos.x, lPos.y, rPos.x, rPos.y)}
                   stroke={color}
-                  strokeWidth={8}
+                  strokeWidth={strokeW}
                   fill="none"
                   strokeLinecap="round"
-                  filter={`url(#wireGlow${result ? 0 : colorIdx})`}
+                  filter={glowFilter}
                 />
                 <path
                   d={makeCablePath(lPos.x, lPos.y - 2, rPos.x, rPos.y - 2)}
@@ -1489,10 +1809,10 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
         </svg>
 
         {/* Sol portlar */}
-        <div style={{ position: "absolute", left: 12, top: 0, bottom: 0, width: "44%", display: "flex", flexDirection: "column", justifyContent: "space-evenly", zIndex: 3 }}>
+        <div style={{ position: "absolute", left: 12, top: 0, bottom: 0, width: "38%", display: "flex", flexDirection: "column", justifyContent: "space-evenly", zIndex: 3 }}>
           {set.left.map((label, i) => {
-            const isWrong = result === "wrong" && wrongPairs.includes(i);
-            const isCorrect = result === "correct";
+            const isLocked = lockedPairs[i] !== undefined;
+            const isWrong = flashWrong === i;
             const isConnected = connections[i] !== undefined;
             const isDraggingThis = dragging && dragging.from === i;
             const color = WIRE_COLORS[i % WIRE_COLORS.length];
@@ -1502,28 +1822,31 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
                 style={{ position: "relative", display: "flex", alignItems: "center" }}
               >
                 <div
-                  onMouseDown={(e) => !result && handleLeftStart(i, e)}
-                  onTouchStart={(e) => !result && handleLeftStart(i, e)}
+                  onMouseDown={(e) => !cascading && handleLeftStart(i, e)}
+                  onTouchStart={(e) => !cascading && handleLeftStart(i, e)}
                   style={{
                     display: "flex", alignItems: "center", gap: 8,
-                    background: isCorrect ? "rgba(63,185,80,0.15)" : isWrong ? "rgba(248,81,73,0.15)" : isDraggingThis ? `${color}15` : "#161b22",
-                    border: `2px solid ${isCorrect ? "#3fb950" : isWrong ? "#f85149" : isDraggingThis ? color : isConnected ? color : "#30363d"}`,
+                    background: isLocked ? "rgba(63,185,80,0.15)" : isWrong ? "rgba(248,81,73,0.2)" : isDraggingThis ? `${color}15` : "#161b22",
+                    border: `2px solid ${isLocked ? "#3fb950" : isWrong ? "#f85149" : isDraggingThis ? color : isConnected ? color : "#30363d"}`,
                     borderRadius: 12, padding: "12px 14px",
-                    cursor: result ? "default" : "grab",
+                    cursor: isLocked || cascading ? "default" : "grab",
                     userSelect: "none", touchAction: "none",
                     transition: "all 0.15s",
                     transform: isDraggingThis ? "scale(1.03)" : "scale(1)",
                     boxShadow: isDraggingThis ? `0 0 16px ${color}40` : "none",
                     flex: 1,
+                    animation: isWrong ? "wrongShake 0.5s ease-out" : "none",
                   }}
                 >
                   <span style={{ fontSize: 14, fontWeight: 700, color: "#c9d1d9" }}>{label}</span>
                 </div>
                 <div
                   ref={el => leftRefs.current[i] = el}
+                  onMouseDown={(e) => !cascading && handleLeftStart(i, e)}
+                  onTouchStart={(e) => !cascading && handleLeftStart(i, e)}
                   style={{
-                    position: "absolute", right: -12, zIndex: 4,
-                    width: 24, height: 24, borderRadius: "50%",
+                    position: "absolute", right: -12, zIndex: 5,
+                    width: 34, height: 34, borderRadius: "50%",
                     background: isDraggingThis ? color : isConnected ? color : "#21262d",
                     border: `3px solid ${isDraggingThis ? "#fff" : isConnected ? color : "#484f58"}`,
                     boxShadow: isDraggingThis
@@ -1532,7 +1855,16 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
                         ? `0 0 10px ${color}80`
                         : "0 2px 4px rgba(0,0,0,0.4)",
                     transition: "all 0.15s",
-                    animation: isDraggingThis ? "portPulse 0.8s ease-in-out infinite" : "none",
+                    cursor: isLocked || cascading ? "default" : "grab",
+                    touchAction: "none",
+                    animation: snapPort?.left === i ? "portSnap 0.4s ease-out" :
+                               isWrong ? "wrongShake 0.5s ease-out" :
+                               isDraggingThis ? "portPulse 0.8s ease-in-out infinite" : "none",
+                    ...(isLocked ? {
+                      background: "#3fb950",
+                      borderColor: "#3fb950",
+                      boxShadow: "0 0 12px rgba(63,185,80,0.6)",
+                    } : {}),
                   }}
                 />
               </div>
@@ -1541,24 +1873,28 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
         </div>
 
         {/* Sag portlar */}
-        <div style={{ position: "absolute", right: 12, top: 0, bottom: 0, width: "44%", display: "flex", flexDirection: "column", justifyContent: "space-evenly", zIndex: 3 }}>
+        <div style={{ position: "absolute", right: 12, top: 0, bottom: 0, width: "38%", display: "flex", flexDirection: "column", justifyContent: "space-evenly", zIndex: 3 }}>
           {set.right.map((label, i) => {
             const connectedFrom = Object.entries(connections).find(([, v]) => v === i);
             const isConnected = !!connectedFrom;
-            const color = connectedFrom ? WIRE_COLORS[Number(connectedFrom[0]) % WIRE_COLORS.length] : "#484f58";
-            const isWrong = result === "wrong" && connectedFrom && wrongPairs.includes(Number(connectedFrom[0]));
-            const isCorrect = result === "correct";
-            const isHoverTarget = dragging && !isConnected;
+            const leftIdx = connectedFrom ? Number(connectedFrom[0]) : null;
+            const color = connectedFrom ? WIRE_COLORS[leftIdx % WIRE_COLORS.length] : "#484f58";
+            const isLocked = leftIdx !== null && lockedPairs[leftIdx] !== undefined;
+            const isWrong = leftIdx !== null && flashWrong === leftIdx;
+            const isHoverTarget = dragging && !isConnected && !Object.values(lockedPairs).includes(i);
             return (
               <div
                 key={`r-${i}`}
+                ref={el => rightBoxRefs.current[i] = el}
                 style={{ position: "relative", display: "flex", alignItems: "center" }}
               >
                 <div
                   ref={el => rightRefs.current[i] = el}
+                  onMouseDown={(e) => !cascading && isConnected && handleRightStart(i, e)}
+                  onTouchStart={(e) => !cascading && isConnected && handleRightStart(i, e)}
                   style={{
                     position: "absolute", left: -12, zIndex: 4,
-                    width: 24, height: 24, borderRadius: "50%",
+                    width: 34, height: 34, borderRadius: "50%",
                     background: isConnected ? color : "#21262d",
                     border: `3px solid ${isConnected ? color : isHoverTarget ? "#58a6ff" : "#484f58"}`,
                     boxShadow: isConnected
@@ -1567,16 +1903,28 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
                         ? "0 0 12px rgba(88,166,255,0.4)"
                         : "0 2px 4px rgba(0,0,0,0.4)",
                     transition: "all 0.15s",
-                    animation: isHoverTarget ? "portPulse 1.2s ease-in-out infinite" : "none",
+                    cursor: isConnected && !isLocked && !cascading ? "pointer" : "default",
+                    touchAction: "none",
+                    animation: snapPort?.right === i ? "portSnap 0.4s ease-out, portGlow 0.5s ease-out" :
+                               isHoverTarget ? "portPulse 1.2s ease-in-out infinite" : "none",
+                    ...(isLocked ? {
+                      background: "#3fb950",
+                      borderColor: "#3fb950",
+                      boxShadow: "0 0 12px rgba(63,185,80,0.6)",
+                    } : {}),
                   }}
                 />
                 <div
+                  onMouseDown={(e) => !cascading && isConnected && handleRightStart(i, e)}
+                  onTouchStart={(e) => !cascading && isConnected && handleRightStart(i, e)}
                   style={{
                     display: "flex", alignItems: "center", gap: 8,
-                    background: isCorrect ? "rgba(63,185,80,0.15)" : isWrong ? "rgba(248,81,73,0.15)" : "#161b22",
-                    border: `2px solid ${isCorrect ? "#3fb950" : isWrong ? "#f85149" : isConnected ? color : isHoverTarget ? "#58a6ff40" : "#30363d"}`,
+                    background: isLocked ? "rgba(63,185,80,0.15)" : isWrong ? "rgba(248,81,73,0.2)" : "#161b22",
+                    border: `2px solid ${isLocked ? "#3fb950" : isWrong ? "#f85149" : isConnected ? color : isHoverTarget ? "#58a6ff40" : "#30363d"}`,
                     borderRadius: 12, padding: "12px 14px",
                     userSelect: "none",
+                    cursor: isConnected && !isLocked && !cascading ? "pointer" : "default",
+                    touchAction: "none",
                     flex: 1,
                   }}
                 >
@@ -1588,29 +1936,34 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
         </div>
       </div>
 
-      {/* Submit */}
-      {!result && (
-        <div style={{ padding: "12px 20px", borderTop: "1px solid #30363d", flexShrink: 0 }}>
-          <button
-            onClick={checkWires}
-            disabled={!allConnected}
-            style={{
-              width: "100%", padding: "14px", borderRadius: 12, border: "none",
-              background: allConnected ? "linear-gradient(135deg, #238636, #2ea043)" : "#21262d",
-              color: allConnected ? "#fff" : "#484f58",
-              fontWeight: 800, fontSize: 15,
-              cursor: allConnected ? "pointer" : "not-allowed",
-              boxShadow: allConnected ? "0 4px 16px rgba(46,160,67,0.3)" : "none",
-            }}
-          >
-            {allConnected ? "✅ Kontrol Et" : `🔌 ${Object.keys(connections).length}/${set.left.length} bağlandı`}
-          </button>
-        </div>
-      )}
-
-      {result === "checking" && (
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10 }}>
-          <div style={{ fontSize: 32, animation: "pulse 0.5s infinite" }}>🔍</div>
+      {/* Alt ilerleme cubugu */}
+      {!cascading && (
+        <div style={{ padding: "10px 20px", borderTop: "1px solid #30363d", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            {set.left.map((_, i) => {
+              const isLocked = lockedPairs[i] !== undefined;
+              const isWrong = flashWrong === i;
+              return (
+                <div key={i} style={{
+                  width: 28, height: 28, borderRadius: "50%",
+                  background: isLocked ? "#3fb950" : isWrong ? "#f85149" : "#21262d",
+                  border: `2px solid ${isLocked ? "#3fb950" : isWrong ? "#f85149" : "#30363d"}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 12, color: "#fff", fontWeight: 800,
+                  transition: "all 0.3s",
+                  animation: isLocked ? "portSnap 0.4s ease-out" : "none",
+                }}>
+                  {isLocked ? "✓" : isWrong ? "✗" : i + 1}
+                </div>
+              );
+            })}
+          </div>
+          <div style={{
+            textAlign: "center", marginTop: 6,
+            fontSize: 11, color: "#8b949e", fontWeight: 600,
+          }}>
+            🔌 {Object.keys(lockedPairs).length}/{set.left.length} doğru bağlandı
+          </div>
         </div>
       )}
 
@@ -1619,6 +1972,34 @@ function WireConnectGame({ difficulty, onComplete, onFail }) {
         @keyframes portPulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.2); }
+        }
+        @keyframes portSnap {
+          0% { transform: scale(1); }
+          30% { transform: scale(1.5); }
+          60% { transform: scale(0.9); }
+          100% { transform: scale(1); }
+        }
+        @keyframes portGlow {
+          0% { box-shadow: 0 0 0px transparent; }
+          50% { box-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+          100% { box-shadow: 0 0 10px currentColor; }
+        }
+        @keyframes wrongShake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-6px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(3px); }
+        }
+        @keyframes cascadeGlow {
+          0% { filter: brightness(1); }
+          50% { filter: brightness(2); }
+          100% { filter: brightness(1.3); }
+        }
+        @keyframes penaltyFloat {
+          0% { opacity: 1; transform: translateY(0) scale(1); }
+          50% { opacity: 1; transform: translateY(-8px) scale(1.2); }
+          100% { opacity: 0; transform: translateY(-18px) scale(0.8); }
         }
       `}</style>
     </div>
@@ -1858,7 +2239,7 @@ function AlignLogoGame({ difficulty, ownedItems = [], onComplete, onFail }) {
     if (result) return;
 
     const center = 50;
-    const dist = Math.abs(logoX - center);
+    const dist = Math.abs(logoRef.current - center);
     const tolerancePct = tolerance;
 
     if (dist <= 5) {
@@ -1882,7 +2263,7 @@ function AlignLogoGame({ difficulty, ownedItems = [], onComplete, onFail }) {
       setTimeLeft((t) => Math.max(0, t - penalty));
       setTimeout(() => setFlash(null), 400);
     }
-  }, [logoX, tolerance, timeLeft, result, onComplete, ownedItems, difficulty]);
+  }, [tolerance, timeLeft, result, onComplete, ownedItems, difficulty]);
 
   const urgent = timeLeft <= 4;
 
@@ -1931,7 +2312,10 @@ function AlignLogoGame({ difficulty, ownedItems = [], onComplete, onFail }) {
       </div>
 
       {/* Game area */}
-      <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div
+        onMouseDown={() => !result && handleSnap()}
+        onTouchStart={() => !result && handleSnap()}
+        style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", cursor: result ? "default" : "pointer" }}>
         {/* Tolerance zone */}
         <div style={{
           position: "absolute",
@@ -2015,7 +2399,9 @@ function AlignLogoGame({ difficulty, ownedItems = [], onComplete, onFail }) {
       {!result && (
         <div style={{ padding: "16px 20px", borderTop: "1px solid #30363d", flexShrink: 0 }}>
           <button
-            onClick={handleSnap}
+            onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; handleSnap(); }}
+            onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+            onTouchStart={() => handleSnap()}
             style={{
               width: "80%", margin: "0 auto", display: "block",
               padding: "18px", borderRadius: 14, border: "none",
@@ -2027,8 +2413,6 @@ function AlignLogoGame({ difficulty, ownedItems = [], onComplete, onFail }) {
               transition: "transform 0.1s",
               touchAction: "manipulation",
             }}
-            onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; }}
-            onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
           >
             🎯 SABİTLE
           </button>
@@ -2881,6 +3265,24 @@ function AcAdjustGame({ difficulty, ownedItems = [], onComplete, onFail }) {
 }
 
 // =========================================
+// ZAMAN YARDIMCI FONKSİYONU
+// =========================================
+const timeAgo = (isoString) => {
+  try {
+    const diff = Date.now() - new Date(isoString).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "az önce";
+    if (mins < 60) return `${mins} dk önce`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours} saat önce`;
+    const days = Math.floor(hours / 24);
+    if (days === 1) return "dün";
+    if (days < 7) return `${days} gün önce`;
+    return `${Math.floor(days / 7)} hafta önce`;
+  } catch { return ""; }
+};
+
+// =========================================
 // ANA OYUN MOTORU
 // =========================================
 export default function OfficeSimulator() {
@@ -2901,6 +3303,7 @@ export default function OfficeSimulator() {
   // Mini-Game
   const [gameType, setGameType] = useState(null);
   const [quizData, setQuizData] = useState(null);
+  const [quizResult, setQuizResult] = useState(null); // { selected, correct, success }
   const [designItems, setDesignItems] = useState([]);
   const [miniTimer, setMiniTimer] = useState(0);
   const miniTimerRef = useRef(null);
@@ -2908,6 +3311,7 @@ export default function OfficeSimulator() {
 
   // Feedback
   const [feedback, setFeedback] = useState(null);
+  const [customerLeaving, setCustomerLeaving] = useState(false);
 
   // Anti-repeat: son oynanan oyun tipi
   const [lastGameType, setLastGameType] = useState(null);
@@ -2965,6 +3369,12 @@ export default function OfficeSimulator() {
     // Dopamin
     setStreak(0);
     setScene("DESK_VIEW");
+    // Sprite'ları preload et
+    CHARACTERS.forEach(ch => {
+      [ch.sprite, ch.spriteHappy, ch.spriteUnhappy].filter(Boolean).forEach(src => {
+        const img = new Image(); img.src = src;
+      });
+    });
   };
 
   // Debug modda departman secilince oyun secim ekranina git
@@ -2993,6 +3403,7 @@ export default function OfficeSimulator() {
     if (money >= 0 && money >= item.price && !ownedItems.includes(item.id)) {
       setMoney((m) => m - item.price);
       setOwnedItems((prev) => [...prev, item.id]);
+      setTimeout(() => saveGame(), 100);
     }
   };
 
@@ -3027,18 +3438,114 @@ export default function OfficeSimulator() {
   // Gözetim durumu (patron takibi)
   const [isUnderWatch, setIsUnderWatch] = useState(false);
 
+  // Save/Load sistemi
+  const [debugTapCount, setDebugTapCount] = useState(0);
+  const [showNewGameConfirm, setShowNewGameConfirm] = useState(false);
+  const [showSaveToast, setShowSaveToast] = useState(false);
+  const [saveInfo, setSaveInfo] = useState(null);
+  const debugTapTimer = useRef(null);
+
+  // Save/Load fonksiyonları
+  const saveGame = useCallback(() => {
+    try {
+      const saveData = {
+        day,
+        money,
+        reputation,
+        playerRank,
+        selectedDeptId: selectedDept?.id || null,
+        selectedTeam,
+        ownedItems,
+        careerStats,
+        streak,
+        personalBest,
+        savedAt: new Date().toISOString(),
+      };
+      localStorage.setItem("gkt_save_data", JSON.stringify(saveData));
+      setShowSaveToast(true);
+      setTimeout(() => setShowSaveToast(false), 1200);
+    } catch {}
+  }, [day, money, reputation, playerRank, selectedDept, selectedTeam, ownedItems, careerStats, streak, personalBest]);
+
+  const loadGame = useCallback(() => {
+    try {
+      const raw = localStorage.getItem("gkt_save_data");
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      // Restore states
+      setDay(data.day || 1);
+      setMoney(data.money ?? 10);
+      setReputation(data.reputation ?? 0);
+      setPlayerRank(data.playerRank ?? 0);
+      setSelectedTeam(data.selectedTeam || null);
+      setOwnedItems(data.ownedItems || []);
+      setCareerStats(data.careerStats || { ...EMPTY_SEASON_STATS });
+      setStreak(data.streak || 0);
+      if (data.personalBest) setPersonalBest(data.personalBest);
+      // Restore department
+      const dept = DEPARTMENTS.find(d => d.id === data.selectedDeptId);
+      if (dept) setSelectedDept(dept);
+      // Land on morning preparation
+      setIsDayStarted(false);
+      setCustomersLeft(3 + Math.floor((data.day || 1) * 0.7));
+      setDayStats({ served: 0, earned: 0, perfect: 0 });
+      setCustomer(null);
+      setDialogue(null);
+      setFeedback(null);
+      setShowShop(false);
+      setShowInGameMenu(false);
+      setScene("DESK_VIEW");
+      return data;
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const hasSaveData = useCallback(() => {
+    try {
+      const raw = localStorage.getItem("gkt_save_data");
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      const dept = DEPARTMENTS.find(d => d.id === data.selectedDeptId);
+      return {
+        day: data.day || 1,
+        savedAt: data.savedAt,
+        deptName: dept?.name || "Bilinmiyor",
+      };
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const deleteSaveData = useCallback(() => {
+    try { localStorage.removeItem("gkt_save_data"); } catch {}
+  }, []);
+
+  // Menu açılınca save bilgisini kontrol et
+  useEffect(() => {
+    if (scene === "MENU") {
+      setSaveInfo(hasSaveData());
+      setShowNewGameConfirm(false);
+      setDebugTapCount(0);
+    }
+  }, [scene, hasSaveData]);
+
   // Ziyaretci gelme dongusu (sadece isDayStarted ise, feedback/shop yoksa, anti-repeat RNG)
   useEffect(() => {
     if (scene === "DESK_VIEW" && isDayStarted && !customer && customersLeft > 0 && !feedback && !showShop) {
       const timer = setTimeout(() => {
-        let type = CUSTOMER_TYPES[Math.floor(Math.random() * CUSTOMER_TYPES.length)];
+        // Departmana göre filtrele (seçilmemişse tümü)
+        const deptTypes = selectedDept
+          ? CUSTOMER_TYPES.filter(t => t.dept === selectedDept.id)
+          : CUSTOMER_TYPES;
+        let type = deptTypes[Math.floor(Math.random() * deptTypes.length)];
         // Debug modda secilen oyun tipini zorla
         if (forcedGameType) {
-          type = CUSTOMER_TYPES.find((t) => t.gameType === forcedGameType) || type;
+          type = (selectedDept ? deptTypes : CUSTOMER_TYPES).find((t) => t.gameType === forcedGameType) || type;
         } else {
           // %70 ihtimalle ayni oyun tipi art arda gelmesin
           if (type.gameType === lastGameType && Math.random() > 0.3) {
-            type = CUSTOMER_TYPES.find((t) => t.gameType !== lastGameType) || type;
+            type = deptTypes.find((t) => t.gameType !== lastGameType) || type;
           }
         }
         const request = forcedGameType
@@ -3052,7 +3559,7 @@ export default function OfficeSimulator() {
       const t = setTimeout(() => setScene("END_DAY"), 800);
       return () => clearTimeout(t);
     }
-  }, [customer, scene, customersLeft, feedback, lastGameType, isDayStarted, showShop, forcedCharacter]);
+  }, [customer, scene, customersLeft, feedback, lastGameType, isDayStarted, showShop, forcedCharacter, selectedDept]);
 
   // İş bitirme — sade GP + streak + feedback
   const completeJob = useCallback(
@@ -3118,13 +3625,19 @@ export default function OfficeSimulator() {
         setScene("DESK_VIEW");
       }, 800);
 
-      // Faz 2: DESK_VIEW'deki feedback popup'ı gösterdikten sonra temizle
+      // Faz 2: Çıkış animasyonunu başlat (feedback'i koru ki sprite değişmesin)
+      setTimeout(() => {
+        setCustomerLeaving(true);
+      }, 2400);
+
+      // Faz 3: Animasyon bittikten sonra tamamen temizle
       setTimeout(() => {
         setCustomer(null);
         setDialogue(null);
         setFeedback(null);
+        setCustomerLeaving(false);
         jobDoneRef.current = false;
-      }, 2300);
+      }, 2900);
     },
     [day, ownedItems, streak]
   );
@@ -3173,16 +3686,22 @@ export default function OfficeSimulator() {
         });
       }
       setDesignItems(items.sort(() => Math.random() - 0.5));
+      setDesignResult(null);
     } else if (customer.gameType === "QUIZ") {
       setMiniTimer(diff.quizTime);
-      const q = QUIZ_POOL[Math.floor(Math.random() * QUIZ_POOL.length)];
+      setQuizResult(null);
+      const pool = QUIZ_POOLS[customer.dept] || QUIZ_POOLS.media_it;
+      const q = pool[Math.floor(Math.random() * pool.length)];
       setQuizData(q);
     }
     // DRAG_DROP, MEMORY_MATCH, WIRE_CONNECT, SORT_FILES, ALIGN_LOGO, SPAM_CLEANUP ve AC_ADJUST kendi timerlarini ve state'lerini yonetir
   };
 
+  const [designResult, setDesignResult] = useState(null);
   const handleDesignClick = (item) => {
+    if (designResult) return;
     clearInterval(miniTimerRef.current);
+    setDesignResult(item.correct ? "correct" : "wrong");
     if (item.correct) {
       completeJob(true, miniTimer);
     } else {
@@ -3191,8 +3710,11 @@ export default function OfficeSimulator() {
   };
 
   const handleQuizAnswer = (answer) => {
+    if (quizResult) return;
     clearInterval(miniTimerRef.current);
-    completeJob(answer === quizData?.answer, miniTimer);
+    const success = answer === quizData?.answer;
+    setQuizResult({ selected: answer, correct: quizData?.answer, success });
+    completeJob(success, miniTimer);
   };
 
   // Yeni gun
@@ -3276,6 +3798,8 @@ export default function OfficeSimulator() {
     setDayStats({ served: 0, earned: 0, perfect: 0, rent, plantDiscount });
     setIsDayStarted(false);
     setScene("DESK_VIEW");
+    // Otomatik kaydet
+    setTimeout(() => saveGame(), 100);
   };
 
   // Endgame seçimini başlat (oyuncu 250+ ⭐ ve Rank 5 iken)
@@ -3408,12 +3932,12 @@ export default function OfficeSimulator() {
             left: 40, top: 280,
             width: 400, zIndex: 8,
             display: "flex", flexDirection: "column", alignItems: "center",
-            animation: feedback?.success
-              ? "happyJump 0.5s ease-out"
+            animation: customerLeaving
+              ? "characterOut 0.5s ease-in forwards"
               : "characterIn 0.8s cubic-bezier(0.22, 0.9, 0.36, 1)",
-            cursor: "pointer",
+            cursor: (feedback || customerLeaving) ? "default" : "pointer",
           }}
-          onClick={() => setDialogue({ text: customer.request })}
+          onClick={() => { if (!feedback && !customerLeaving) setDialogue({ text: customer.request }); }}
         >
           {/* GÖREV SONU — Sıcak Minimal Popup (karakterin üstünde) */}
           {feedback && (
@@ -3492,16 +4016,28 @@ export default function OfficeSimulator() {
             {customer.displayName || customer.name}
           </div>
 
-          {/* Karakter Sprite */}
+          {/* Başarı pırıltısı */}
+          {feedback?.success && <SparkleEffect />}
+
+          {/* Başarısızlık öfke işareti */}
+          {feedback && !feedback.success && <AngerMark />}
+
+          {/* Karakter Sprite — duyguya göre değişir */}
           {customer.sprite ? (
             <img
-              src={customer.sprite}
+              src={
+                feedback?.success ? (customer.spriteHappy || customer.sprite) :
+                feedback && !feedback.success ? (customer.spriteUnhappy || customer.sprite) :
+                customer.sprite
+              }
               alt={customer.displayName || customer.name}
               style={{
                 width: 340, height: "auto", objectFit: "contain",
                 imageRendering: "auto",
                 filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))",
-                animation: "breathe 4s ease-in-out infinite",
+                animation: feedback?.success ? "happyJump 0.5s ease-out" :
+                           feedback && !feedback.success ? "sadShake 0.4s ease-out" :
+                           "breathe 4s ease-in-out infinite",
                 transformOrigin: "bottom center",
               }}
               draggable={false}
@@ -3558,7 +4094,7 @@ export default function OfficeSimulator() {
       />
       {/* Laptop ekran hitbox — sadece ekran alanı tıklanabilir */}
       <div
-        onClick={() => { if (customer) startMiniGame(); }}
+        onClick={() => { if (customer && !feedback && !customerLeaving) startMiniGame(); }}
         style={{
           position: "absolute",
           left: 18,
@@ -3566,7 +4102,7 @@ export default function OfficeSimulator() {
           width: 120,
           height: 70,
           zIndex: 12,
-          cursor: customer ? "pointer" : "default",
+          cursor: (customer && !feedback && !customerLeaving) ? "pointer" : "default",
           background: "transparent",
         }}
         onMouseDown={(e) => {
@@ -3581,7 +4117,7 @@ export default function OfficeSimulator() {
         }}
       />
       {/* Laptop tıklama ipucu — neon yeşil yanıp sönen imleç */}
-      {customer && !dialogue && (
+      {customer && !dialogue && !feedback && !customerLeaving && (
         <svg style={{
           position: "absolute",
           left: 60,
@@ -3725,22 +4261,32 @@ export default function OfficeSimulator() {
               <button
                 onClick={() => setShowShop(true)}
                 style={{
-                  padding: "12px 24px", fontSize: 14, fontWeight: 700,
-                  background: "linear-gradient(135deg, #f39c12, #e67e22)", color: "#fff",
-                  border: "none", borderRadius: 10, cursor: "pointer",
-                  boxShadow: "0 4px 12px rgba(243,156,18,0.3)",
+                  padding: "10px 22px", fontSize: 14, fontWeight: 900,
+                  background: "#f39c12", color: "#fff",
+                  border: "3px solid #d35400", borderRadius: 12, cursor: "pointer",
+                  boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+                  transition: "transform 0.1s, background 0.15s, border-color 0.15s, box-shadow 0.15s",
                 }}
+                onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; }}
+                onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#e67e22"; e.currentTarget.style.borderColor = "#a04000"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#f39c12"; e.currentTarget.style.borderColor = "#d35400"; }}
               >
                 Mağaza
               </button>
               <button
-                onClick={() => setIsDayStarted(true)}
+                onClick={() => { setIsDayStarted(true); setTimeout(() => saveGame(), 50); }}
                 style={{
-                  padding: "12px 32px", fontSize: 14, fontWeight: 800,
-                  background: "linear-gradient(135deg, #2ecc71, #27ae60)", color: "#fff",
-                  border: "none", borderRadius: 10, cursor: "pointer",
-                  boxShadow: "0 4px 16px rgba(46,204,113,0.4)",
+                  padding: "10px 28px", fontSize: 14, fontWeight: 900,
+                  background: "#2ecc71", color: "#fff",
+                  border: "3px solid #1e8449", borderRadius: 12, cursor: "pointer",
+                  boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+                  transition: "transform 0.1s, background 0.15s, border-color 0.15s, box-shadow 0.15s",
                 }}
+                onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; }}
+                onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#27ae60"; e.currentTarget.style.borderColor = "#196f3d"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#2ecc71"; e.currentTarget.style.borderColor = "#1e8449"; }}
               >
                 Ofisi Aç
               </button>
@@ -3913,49 +4459,98 @@ export default function OfficeSimulator() {
               <p style={{ textAlign: "center", fontSize: 11, color: "#8b949e", margin: "0 0 16px" }}>
                 Yanlış seçim = başarısız!
               </p>
-              {designItems.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={(e) => handleDesignClick(item, e)}
-                  style={{
-                    position: "absolute", left: item.x, top: item.y,
-                    width: 100, height: 100, borderRadius: 12, cursor: "pointer",
-                    background: item.correct ? "#f1c40f" : "#7f8c8d",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontWeight: "bold", fontSize: 12, color: item.correct ? "#000" : "#fff",
-                    boxShadow: item.correct ? "0 0 24px rgba(241,196,15,0.4)" : "0 4px 8px rgba(0,0,0,0.3)",
-                    border: "2px solid rgba(255,255,255,0.2)", transition: "transform 0.1s",
-                  }}
-                >
-                  {item.label}
-                </div>
-              ))}
+              {designItems.map((item) => {
+                const picked = designResult && item.correct ? "correct" : designResult && !item.correct ? "wrong" : null;
+                return (
+                  <div
+                    key={item.id}
+                    onClick={(e) => handleDesignClick(item, e)}
+                    style={{
+                      position: "absolute", left: item.x, top: item.y,
+                      width: 100, height: 100, borderRadius: 12,
+                      cursor: designResult ? "default" : "pointer",
+                      background: picked === "correct" ? "#3fb950" : picked === "wrong" ? "#f85149" : item.correct ? "#f1c40f" : "#7f8c8d",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontWeight: "bold", fontSize: 12, color: picked ? "#fff" : item.correct ? "#000" : "#fff",
+                      boxShadow: picked === "correct" ? "0 0 24px rgba(63,185,80,0.5)" : picked === "wrong" ? "0 0 24px rgba(248,81,73,0.5)" : item.correct ? "0 0 24px rgba(241,196,15,0.4)" : "0 4px 8px rgba(0,0,0,0.3)",
+                      border: picked === "correct" ? "3px solid #3fb950" : picked === "wrong" ? "3px solid #f85149" : "2px solid rgba(255,255,255,0.2)",
+                      transition: "all 0.15s",
+                      transform: picked ? "scale(1.08)" : "scale(1)",
+                    }}
+                  >
+                    {picked === "correct" ? "✅" : picked === "wrong" ? "❌" : item.label}
+                  </div>
+                );
+              })}
             </>
           )}
 
           {/* STAJYER — Quiz */}
           {gameType === "QUIZ" && quizData && (
-            <div style={{ marginTop: 30, textAlign: "center" }}>
+            <div style={{ marginTop: 30, textAlign: "center", position: "relative" }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#c9d1d9", marginBottom: 24, lineHeight: 1.6, padding: "0 10px" }}>
                 {quizData.q}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "0 20px" }}>
-                {quizData.opts.map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => handleQuizAnswer(opt)}
-                    style={{
-                      padding: "14px 16px", background: "#21262d", color: "#c9d1d9",
-                      border: "2px solid #30363d", borderRadius: 10, cursor: "pointer",
-                      fontSize: 14, fontWeight: 600, transition: "all 0.15s",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#58a6ff"; e.currentTarget.style.color = "#58a6ff"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#30363d"; e.currentTarget.style.color = "#c9d1d9"; }}
-                  >
-                    {opt}
-                  </button>
-                ))}
+                {quizData.opts.map((opt) => {
+                  const isSelected = quizResult?.selected === opt;
+                  const isCorrect = quizResult?.correct === opt;
+                  const showResult = quizResult !== null;
+                  const btnBg = showResult
+                    ? isCorrect ? "rgba(63,185,80,0.25)" : isSelected ? "rgba(248,81,73,0.25)" : "#21262d"
+                    : "#21262d";
+                  const btnBorder = showResult
+                    ? isCorrect ? "#3fb950" : isSelected ? "#f85149" : "#30363d"
+                    : "#30363d";
+                  const btnColor = showResult
+                    ? isCorrect ? "#3fb950" : isSelected ? "#f85149" : "#484f58"
+                    : "#c9d1d9";
+                  return (
+                    <button
+                      key={opt}
+                      onClick={() => handleQuizAnswer(opt)}
+                      disabled={showResult}
+                      style={{
+                        padding: "14px 16px", background: btnBg, color: btnColor,
+                        border: `2px solid ${btnBorder}`, borderRadius: 10,
+                        cursor: showResult ? "default" : "pointer",
+                        fontSize: 14, fontWeight: 600, transition: "all 0.3s",
+                        position: "relative",
+                        animation: showResult && isSelected && !quizResult.success ? "wrongShake 0.5s ease-out" : "none",
+                        opacity: showResult && !isCorrect && !isSelected ? 0.4 : 1,
+                      }}
+                      onMouseEnter={(e) => { if (!showResult) { e.currentTarget.style.borderColor = "#58a6ff"; e.currentTarget.style.color = "#58a6ff"; }}}
+                      onMouseLeave={(e) => { if (!showResult) { e.currentTarget.style.borderColor = "#30363d"; e.currentTarget.style.color = "#c9d1d9"; }}}
+                    >
+                      {showResult && isCorrect && <span style={{ marginRight: 6 }}>✅</span>}
+                      {showResult && isSelected && !quizResult.success && <span style={{ marginRight: 6 }}>❌</span>}
+                      {opt}
+                    </button>
+                  );
+                })}
               </div>
+
+              {/* Sonuç overlay */}
+              {quizResult && (
+                <div style={{
+                  position: "absolute", inset: "-10px 0px -20px 0px", borderRadius: 16,
+                  background: quizResult.success ? "rgba(63,185,80,0.15)" : "rgba(248,81,73,0.15)",
+                  border: `2px solid ${quizResult.success ? "#3fb950" : "#f85149"}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  animation: "fadeIn 0.3s ease-out",
+                  pointerEvents: "none",
+                }}>
+                  <div style={{
+                    background: quizResult.success ? "#238636" : "#da3633",
+                    padding: "12px 28px", borderRadius: 12,
+                    fontSize: 18, fontWeight: 900, color: "#fff",
+                    boxShadow: `0 4px 20px ${quizResult.success ? "rgba(35,134,54,0.5)" : "rgba(218,54,51,0.5)"}`,
+                    animation: "popIn 0.3s ease-out",
+                  }}>
+                    {quizResult.success ? "✅ Başarılı!" : "❌ Başarısız!"}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -4055,11 +4650,15 @@ export default function OfficeSimulator() {
           onClick={startNextDay}
           style={{
             padding: "14px 40px", fontSize: 16, fontWeight: 800,
-            background: "linear-gradient(135deg, #238636, #2ea043)",
-            color: "white",
-            border: "none", borderRadius: 12, cursor: "pointer",
-            boxShadow: "0 4px 16px rgba(46,160,67,0.3)",
+            background: "#2ea043", color: "white",
+            border: "3px solid #1b5e20", borderRadius: 12, cursor: "pointer",
+            boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+            transition: "transform 0.1s, background 0.15s, box-shadow 0.15s",
           }}
+          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; }}
+          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "#238636"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#2ea043"; }}
         >
           Sonraki Gün ☀️
         </button>
@@ -4171,11 +4770,16 @@ export default function OfficeSimulator() {
           }}
           style={{
             padding: "16px 48px", fontSize: 18, fontWeight: 900,
-            background: "linear-gradient(135deg, #f59e0b, #d97706)", color: "#000",
-            border: "none", borderRadius: 14, cursor: "pointer",
-            boxShadow: "0 4px 24px rgba(245,158,11,0.4)",
+            background: "#f59e0b", color: "#000",
+            border: "3px solid #b45309", borderRadius: 14, cursor: "pointer",
+            boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
             letterSpacing: 0.5, marginBottom: 12,
+            transition: "transform 0.1s, background 0.15s, box-shadow 0.15s",
           }}
+          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; }}
+          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "#d97706"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#f59e0b"; }}
         >
           🗳️ Aday Ol
         </button>
@@ -4278,13 +4882,15 @@ export default function OfficeSimulator() {
           }}
           style={{
             padding: "14px 40px", fontSize: 16, fontWeight: 800,
-            background: won
-              ? "linear-gradient(135deg, #f1c40f, #f39c12)"
-              : "linear-gradient(135deg, #238636, #2ea043)",
+            background: won ? "#f1c40f" : "#2ea043",
             color: won ? "#000" : "white",
-            border: "none", borderRadius: 12, cursor: "pointer",
-            boxShadow: won ? "0 4px 16px rgba(241,196,15,0.4)" : "0 4px 16px rgba(46,160,67,0.3)",
+            border: won ? "3px solid #b7950b" : "3px solid #1b5e20",
+            borderRadius: 12, cursor: "pointer",
+            boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+            transition: "transform 0.1s, background 0.15s, box-shadow 0.15s",
           }}
+          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; }}
+          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; }}
         >
           {won ? "🎬 Bitir" : "Devam Et — İtibar Kazan"}
         </button>
@@ -4303,379 +4909,457 @@ export default function OfficeSimulator() {
     });
   };
 
-  const renderSettings = () => (
-    <div
-      style={{
-        position: "absolute", inset: 0, zIndex: 600,
-        background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)",
-        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-        animation: "fadeIn 0.2s ease-out",
-      }}
-      onClick={(e) => { if (e.target === e.currentTarget) setShowSettings(false); }}
-    >
+  const renderSettings = () => {
+    const toggleStyle = (enabled) => ({
+      width: 48, height: 26, borderRadius: 13, cursor: "pointer",
+      border: enabled ? "2px solid #2d7a3a" : "2px solid #555",
+      background: enabled ? "#4caf50" : "#555",
+      position: "relative", transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+    });
+    const toggleKnob = (enabled) => ({
+      width: 18, height: 18, borderRadius: "50%",
+      background: "#fff",
+      position: "absolute", top: 2,
+      left: enabled ? 24 : 2,
+      transition: "left 0.2s",
+      boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+    });
+    const settingRow = { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0" };
+    const settingDivider = { ...settingRow, borderBottom: "2px solid rgba(139,69,69,0.2)" };
+
+    return (
       <div
         style={{
-          background: "linear-gradient(180deg, #161b22, #0d1117)",
-          borderRadius: 16, padding: 24, width: "85%", maxWidth: 360,
-          border: "1px solid #30363d",
-          boxShadow: "0 16px 48px rgba(0,0,0,0.5)",
+          position: "absolute", inset: 0, zIndex: 600,
+          background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          animation: "fadeIn 0.2s ease-out",
         }}
+        onClick={(e) => { if (e.target === e.currentTarget) setShowSettings(false); }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 900, color: "#fff", margin: 0 }}>Ayarlar</h2>
-          <button
-            onClick={() => setShowSettings(false)}
-            style={{
-              background: "rgba(139,148,158,0.15)", border: "none", color: "#8b949e",
-              borderRadius: 8, width: 32, height: 32, cursor: "pointer",
-              fontSize: 16, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center",
-            }}
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Ses Efektleri */}
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "12px 0", borderBottom: "1px solid #21262d",
-        }}>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#c9d1d9" }}>Ses Efektleri</div>
-            <div style={{ fontSize: 11, color: "#8b949e", marginTop: 2 }}>Oyun içi ses efektleri</div>
+        <div
+          style={{
+            background: "#1a0808",
+            borderRadius: 18, padding: 22, width: "85%", maxWidth: 360,
+            border: "3px solid #8b2020",
+            boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
+          }}
+        >
+          {/* Header */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 900, color: "#fff", margin: 0, textTransform: "uppercase", letterSpacing: 1 }}>
+              Ayarlar
+            </h2>
+            <button
+              onClick={() => setShowSettings(false)}
+              style={{
+                background: MENU_BTN_BG, border: "2px solid #a93226", color: "#fff",
+                borderRadius: "50%", width: 30, height: 30, cursor: "pointer",
+                fontSize: 14, fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+              }}
+            >
+              ✕
+            </button>
           </div>
-          <button
-            onClick={() => updateSetting("sfxEnabled", !settings.sfxEnabled)}
-            style={{
-              width: 48, height: 26, borderRadius: 13, border: "none", cursor: "pointer",
-              background: settings.sfxEnabled ? "#3fb950" : "#30363d",
-              position: "relative", transition: "background 0.2s",
-            }}
-          >
-            <div style={{
-              width: 20, height: 20, borderRadius: "50%", background: "#fff",
-              position: "absolute", top: 3,
-              left: settings.sfxEnabled ? 25 : 3,
-              transition: "left 0.2s",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
-            }} />
-          </button>
-        </div>
 
-        {/* Muzik */}
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "12px 0", borderBottom: "1px solid #21262d",
-        }}>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#c9d1d9" }}>Müzik</div>
-            <div style={{ fontSize: 11, color: "#8b949e", marginTop: 2 }}>Arka plan müziği</div>
+          {/* Ses Efektleri */}
+          <div style={settingDivider}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>Ses Efektleri</div>
+              <div style={{ fontSize: 10, color: "#a88", marginTop: 1 }}>Oyun içi ses efektleri</div>
+            </div>
+            <button onClick={() => updateSetting("sfxEnabled", !settings.sfxEnabled)} style={toggleStyle(settings.sfxEnabled)}>
+              <div style={toggleKnob(settings.sfxEnabled)} />
+            </button>
           </div>
-          <button
-            onClick={() => updateSetting("musicEnabled", !settings.musicEnabled)}
-            style={{
-              width: 48, height: 26, borderRadius: 13, border: "none", cursor: "pointer",
-              background: settings.musicEnabled ? "#3fb950" : "#30363d",
-              position: "relative", transition: "background 0.2s",
-            }}
-          >
-            <div style={{
-              width: 20, height: 20, borderRadius: "50%", background: "#fff",
-              position: "absolute", top: 3,
-              left: settings.musicEnabled ? 25 : 3,
-              transition: "left 0.2s",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
-            }} />
-          </button>
-        </div>
 
-        {/* Zamanlayici Goster */}
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "12px 0", borderBottom: "1px solid #21262d",
-        }}>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#c9d1d9" }}>Zamanlayıcı</div>
-            <div style={{ fontSize: 11, color: "#8b949e", marginTop: 2 }}>Mini oyunlarda süre göster</div>
+          {/* Muzik */}
+          <div style={settingDivider}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>Müzik</div>
+              <div style={{ fontSize: 10, color: "#a88", marginTop: 1 }}>Arka plan müziği</div>
+            </div>
+            <button onClick={() => updateSetting("musicEnabled", !settings.musicEnabled)} style={toggleStyle(settings.musicEnabled)}>
+              <div style={toggleKnob(settings.musicEnabled)} />
+            </button>
           </div>
-          <button
-            onClick={() => updateSetting("showTimer", !settings.showTimer)}
-            style={{
-              width: 48, height: 26, borderRadius: 13, border: "none", cursor: "pointer",
-              background: settings.showTimer ? "#3fb950" : "#30363d",
-              position: "relative", transition: "background 0.2s",
-            }}
-          >
-            <div style={{
-              width: 20, height: 20, borderRadius: "50%", background: "#fff",
-              position: "absolute", top: 3,
-              left: settings.showTimer ? 25 : 3,
-              transition: "left 0.2s",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
-            }} />
-          </button>
-        </div>
 
-        {/* Kisisel En Iyi Sifirla */}
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "12px 0",
-        }}>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#c9d1d9" }}>Verileri Sıfırla</div>
-            <div style={{ fontSize: 11, color: "#8b949e", marginTop: 2 }}>Kişisel en iyileri temizle</div>
+          {/* Zamanlayici */}
+          <div style={settingDivider}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>Zamanlayıcı</div>
+              <div style={{ fontSize: 10, color: "#a88", marginTop: 1 }}>Mini oyunlarda süre göster</div>
+            </div>
+            <button onClick={() => updateSetting("showTimer", !settings.showTimer)} style={toggleStyle(settings.showTimer)}>
+              <div style={toggleKnob(settings.showTimer)} />
+            </button>
           </div>
-          <button
-            onClick={() => {
-              const fresh = { maxMoney: 0, maxDay: 0, totalPerfect: 0, allItemsDay: null };
-              setPersonalBest(fresh);
-              localStorage.setItem("gkt_personal_best", JSON.stringify(fresh));
-            }}
-            style={{
-              background: "rgba(248,81,73,0.15)", border: "1px solid rgba(248,81,73,0.3)",
-              color: "#f85149", borderRadius: 8, padding: "6px 14px", cursor: "pointer",
-              fontSize: 12, fontWeight: 700,
-            }}
-          >
-            Sıfırla
-          </button>
-        </div>
 
-        <div style={{ marginTop: 16, fontSize: 10, color: "#30363d", textAlign: "center" }}>
-          v0.9 · GKT Ofis Simülatörü
+          {/* Verileri Sifirla */}
+          <div style={{ ...settingRow, marginTop: 4 }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>Verileri Sıfırla</div>
+              <div style={{ fontSize: 10, color: "#a88", marginTop: 1 }}>Kişisel en iyileri temizle</div>
+            </div>
+            <button
+              onClick={() => {
+                const fresh = { maxMoney: 0, maxDay: 0, totalPerfect: 0, allItemsDay: null };
+                setPersonalBest(fresh);
+                localStorage.setItem("gkt_personal_best", JSON.stringify(fresh));
+              }}
+              style={{
+                background: MENU_BTN_BG, border: "2px solid #a93226",
+                color: "#fff", borderRadius: 10, padding: "5px 14px", cursor: "pointer",
+                fontSize: 11, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0.5,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                transition: "transform 0.1s, background 0.15s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = MENU_BTN_BG_HOVER; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = MENU_BTN_BG; }}
+              onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+            >
+              Sıfırla
+            </button>
+          </div>
+
+          <div style={{ marginTop: 14, fontSize: 9, color: "#5c3030", textAlign: "center" }}>
+            v1.0 · GKT Ofis Simülatörü
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ==========================================
   // OYUN ICI MENU (Hamburger)
   // ==========================================
-  const renderInGameMenu = () => (
-    <div
-      style={{
-        position: "absolute", inset: 0, zIndex: 550,
-        background: "rgba(0,0,0,0.8)", backdropFilter: "blur(6px)",
-        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-        animation: "fadeIn 0.2s ease-out",
-      }}
-      onClick={(e) => { if (e.target === e.currentTarget) setShowInGameMenu(false); }}
-    >
+  const renderInGameMenu = () => {
+    const igBtnBase = {
+      width: "100%", padding: "10px 20px", borderRadius: 14, cursor: "pointer",
+      fontWeight: 900, fontSize: 14, letterSpacing: 1, textTransform: "uppercase",
+      color: "#fff",
+      transition: "transform 0.1s, background 0.15s, border-color 0.15s, box-shadow 0.15s",
+    };
+    const igBtnDown = (e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; };
+    const igBtnUp = (e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; };
+
+    return (
       <div
         style={{
-          background: "linear-gradient(180deg, #161b22, #0d1117)",
-          borderRadius: 16, padding: 28, width: "75%", maxWidth: 300,
-          border: "1px solid #30363d",
-          boxShadow: "0 16px 48px rgba(0,0,0,0.5)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: 12,
+          position: "absolute", inset: 0, zIndex: 550,
+          background: "rgba(0,0,0,0.8)", backdropFilter: "blur(6px)",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          animation: "fadeIn 0.2s ease-out",
         }}
+        onClick={(e) => { if (e.target === e.currentTarget) setShowInGameMenu(false); }}
       >
-        <div style={{ fontSize: 11, fontWeight: 700, color: "#8b949e", letterSpacing: 2, marginBottom: 4 }}>
-          OYUN MENÜSÜ
+        <div
+          style={{
+            background: "#1a0808",
+            borderRadius: 18, padding: 24, width: "75%", maxWidth: 300,
+            border: "3px solid #8b2020",
+            boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
+          }}
+        >
+          <div style={{ fontSize: 11, fontWeight: 900, color: "#c9a0a0", letterSpacing: 2, marginBottom: 2, textTransform: "uppercase" }}>
+            Oyun Menüsü
+          </div>
+
+          {/* Devam Et — yeşil */}
+          <button
+            onClick={() => setShowInGameMenu(false)}
+            style={{ ...igBtnBase, background: "#4caf50", border: "3px solid #2e7d32", boxShadow: "0 3px 10px rgba(0,0,0,0.25)" }}
+            onMouseDown={igBtnDown} onMouseUp={igBtnUp}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#388e3c"; e.currentTarget.style.borderColor = "#1b5e20"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#4caf50"; e.currentTarget.style.borderColor = "#2e7d32"; }}
+          >
+            Devam Et
+          </button>
+
+          {/* Ayarlar — gri */}
+          <button
+            onClick={() => setShowSettings(true)}
+            style={{ ...igBtnBase, background: "#666", border: "3px solid #444", boxShadow: "0 3px 10px rgba(0,0,0,0.25)" }}
+            onMouseDown={igBtnDown} onMouseUp={igBtnUp}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#555"; e.currentTarget.style.borderColor = "#333"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#666"; e.currentTarget.style.borderColor = "#444"; }}
+          >
+            Ayarlar
+          </button>
+
+          {/* Çıkış — kırmızı */}
+          <button
+            onClick={() => {
+              setShowInGameMenu(false);
+              setScene("MENU");
+              setCustomer(null);
+              setDialogue(null);
+              setGameType(null);
+              setFeedback(null);
+              setForcedGameType(null);
+            }}
+            style={{ ...igBtnBase, background: "#e74c3c", border: "3px solid #a93226", boxShadow: "0 3px 10px rgba(0,0,0,0.25)" }}
+            onMouseDown={igBtnDown} onMouseUp={igBtnUp}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#c0392b"; e.currentTarget.style.borderColor = "#922b21"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "#e74c3c"; e.currentTarget.style.borderColor = "#a93226"; }}
+          >
+            Çıkış
+          </button>
         </div>
-
-        {/* Devam Et */}
-        <button
-          onClick={() => setShowInGameMenu(false)}
-          style={{
-            width: "100%", padding: "14px 20px", borderRadius: 12, border: "none",
-            background: "linear-gradient(135deg, #238636, #2ea043)", color: "#fff",
-            fontWeight: 800, fontSize: 15, cursor: "pointer",
-            boxShadow: "0 4px 16px rgba(35,134,54,0.3)",
-            transition: "transform 0.1s",
-          }}
-          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
-          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-        >
-          Devam Et
-        </button>
-
-        {/* Ayarlar */}
-        <button
-          onClick={() => { setShowInGameMenu(false); setShowSettings(true); }}
-          style={{
-            width: "100%", padding: "12px 20px", borderRadius: 12,
-            border: "2px solid #30363d", background: "rgba(33,38,45,0.8)", color: "#c9d1d9",
-            fontWeight: 700, fontSize: 14, cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-            transition: "transform 0.1s, background 0.2s",
-          }}
-          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
-          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(33,38,45,1)"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(33,38,45,0.8)"; }}
-        >
-          Ayarlar
-        </button>
-
-        {/* Cikis */}
-        <button
-          onClick={() => {
-            setShowInGameMenu(false);
-            setScene("MENU");
-            setCustomer(null);
-            setDialogue(null);
-            setGameType(null);
-            setFeedback(null);
-            setForcedGameType(null);
-          }}
-          style={{
-            width: "100%", padding: "12px 20px", borderRadius: 12,
-            border: "2px solid rgba(248,81,73,0.3)", background: "rgba(248,81,73,0.1)", color: "#f85149",
-            fontWeight: 700, fontSize: 14, cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-            transition: "transform 0.1s, background 0.2s",
-          }}
-          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
-          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(248,81,73,0.2)"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(248,81,73,0.1)"; }}
-        >
-          Çıkış
-        </button>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ==========================================
   // MENU
   // ==========================================
+  const handleLogoTap = () => {
+    const newCount = debugTapCount + 1;
+    setDebugTapCount(newCount);
+    if (debugTapTimer.current) clearTimeout(debugTapTimer.current);
+    debugTapTimer.current = setTimeout(() => setDebugTapCount(0), 3000);
+  };
+
+  // Ortak menü buton stili — 2D cartoon
+  const MENU_BTN_BG = "#e74c3c";
+  const MENU_BTN_BG_HOVER = "#c0392b";
+  const menuBtnStyle = {
+    width: "85%", margin: "0 auto", padding: "7px 14px", borderRadius: 14, cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+    fontWeight: 900, fontSize: 13, letterSpacing: 1, textTransform: "uppercase",
+    color: "#fff",
+    background: MENU_BTN_BG,
+    border: "3px solid #a93226",
+    boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+    transition: "transform 0.1s, background 0.15s, border-color 0.15s, box-shadow 0.15s",
+  };
+  const menuBtnDown = (e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; };
+  const menuBtnUp = (e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; };
+  const menuBtnEnter = (e) => { e.currentTarget.style.background = MENU_BTN_BG_HOVER; e.currentTarget.style.borderColor = "#922b21"; };
+  const menuBtnLeave = (e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = MENU_BTN_BG; e.currentTarget.style.borderColor = "#a93226"; };
+
   const renderMenu = () => (
     <div
       style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(180deg, #0d1117 0%, #161b22 40%, #0d1117 100%)",
+        background: "url('/assets/office/bg.png') center/cover",
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-        padding: 24,
+        padding: 20,
       }}
     >
-      {/* Yildizlar */}
-      {[...Array(25)].map((_, i) => (
-        <div
-          key={i}
-          style={{
-            position: "absolute",
-            left: `${(i * 41 + 7) % 100}%`,
-            top: `${(i * 29 + 3) % 85}%`,
-            width: i % 3 === 0 ? 3 : 2,
-            height: i % 3 === 0 ? 3 : 2,
-            background: "#fff",
-            borderRadius: "50%",
-            opacity: 0.08 + (i % 5) * 0.06,
-            animation: `twinkle ${2 + (i % 3)}s ease-in-out infinite alternate`,
-          }}
-        />
-      ))}
+      {/* Dark overlay + blur */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "rgba(0,0,0,0.7)",
+        backdropFilter: "blur(5px)", WebkitBackdropFilter: "blur(5px)",
+      }} />
 
-      <div style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
-        {/* Logo alani */}
-        <img
-          src="/assets/logo_gkt.png"
-          alt="GKT Logo"
-          style={{
-            width: 100, height: 100, borderRadius: 20, margin: "0 auto 16px",
-            objectFit: "contain", display: "block",
-            filter: "drop-shadow(0 8px 32px rgba(99,102,241,0.3))",
-          }}
-        />
+      <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%", maxWidth: 320 }}>
 
-        <h1
-          style={{
+        {/* Logo + Title row */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: 6, justifyContent: "center",
+          animation: "menuItemIn 0.4s ease-out both",
+        }}>
+          <img
+            src="/assets/logo_gkt.png"
+            alt="GKT Logo"
+            onClick={handleLogoTap}
+            style={{
+              width: 64, height: 64, borderRadius: "50%", flexShrink: 0,
+              objectFit: "contain", cursor: "pointer",
+              filter: "drop-shadow(0 4px 12px rgba(231,76,60,0.5))",
+              animation: "logoFloat 3s ease-in-out infinite alternate",
+              border: "3px solid rgba(231,76,60,0.3)",
+            }}
+          />
+          <h1 style={{
             fontSize: 28, fontWeight: 900, color: "#fff", margin: 0,
-            letterSpacing: -0.5, textShadow: "0 2px 20px rgba(99,102,241,0.4)",
-          }}
-        >
-          Ofis Simülatörü
-        </h1>
-        <div style={{ fontSize: 13, color: "#e74c3c", fontWeight: 700, marginTop: 6, letterSpacing: 2 }}>
-          Akdeniz Üniversitesi
+            letterSpacing: -0.5,
+            textShadow: "0 2px 8px rgba(231,76,60,0.5), 0 4px 20px rgba(231,76,60,0.2)",
+            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+          }}>
+            Ofis Simülatörü
+          </h1>
         </div>
-        <div style={{ fontSize: 15, color: "#fff", fontWeight: 800, marginTop: 4, letterSpacing: 1 }}>
-          GKT
-        </div>
-        <div style={{ fontSize: 11, color: "#8b949e", marginTop: 2 }}>
-          Girişimcilik ve Kariyer Topluluğu
+
+        {/* Subtitles */}
+        <div style={{ marginTop: 6, animation: "menuItemIn 0.4s ease-out 0.1s both" }}>
+          <div style={{ fontSize: 12, color: "#e74c3c", fontWeight: 700, letterSpacing: 2 }}>
+            Akdeniz Üniversitesi
+          </div>
+          <div style={{ fontSize: 10, color: "#8b949e", marginTop: 2 }}>
+            Girişimcilik ve Kariyer Topluluğu
+          </div>
         </div>
 
         {/* Butonlar */}
-        <div style={{ marginTop: 40, display: "flex", flexDirection: "column", gap: 12, minWidth: 240 }}>
+        <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 7, width: "100%" }}>
+
+          {/* Devam Et (sadece kayıt varsa) */}
+          {saveInfo && (
+            <button
+              onClick={() => loadGame()}
+              style={{ ...menuBtnStyle, textAlign: "center", animation: "menuItemIn 0.4s ease-out 0.2s both" }}
+              onMouseDown={menuBtnDown} onMouseUp={menuBtnUp}
+              onMouseEnter={menuBtnEnter} onMouseLeave={menuBtnLeave}
+            >
+              <div>DEVAM ET</div>
+              <div style={{ fontSize: 8, fontWeight: 600, opacity: 0.75, marginTop: 1, textTransform: "none", letterSpacing: 0 }}>
+                Gün {saveInfo.day} · {saveInfo.deptName} · {timeAgo(saveInfo.savedAt)}
+              </div>
+            </button>
+          )}
+
+          {/* Yeni Oyun / Oyna */}
           <button
-            onClick={() => setScene("DEPT_SELECT")}
-            style={{
-              padding: "16px 24px", borderRadius: 14, border: "none",
-              background: "linear-gradient(135deg, #e74c3c, #c0392b)", color: "#fff",
-              fontWeight: 800, fontSize: 17, cursor: "pointer",
-              boxShadow: "0 6px 24px rgba(231,76,60,0.4)", letterSpacing: 0.5,
-              transition: "transform 0.1s",
-            }}
-            onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
-            onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+            onClick={() => { if (saveInfo) { setShowNewGameConfirm(true); } else { setScene("DEPT_SELECT"); } }}
+            style={{ ...menuBtnStyle, animation: "menuItemIn 0.4s ease-out 0.3s both" }}
+            onMouseDown={menuBtnDown} onMouseUp={menuBtnUp}
+            onMouseEnter={menuBtnEnter} onMouseLeave={menuBtnLeave}
           >
-            Oyna
+            {saveInfo ? "YENİ OYUN" : "OYNA"}
           </button>
+
+          {/* Kariyer Dosyam */}
+          <button
+            onClick={() => alert("Kariyer sayfası yakında eklenecek!")}
+            style={{ ...menuBtnStyle, animation: "menuItemIn 0.4s ease-out 0.4s both" }}
+            onMouseDown={menuBtnDown} onMouseUp={menuBtnUp}
+            onMouseEnter={menuBtnEnter} onMouseLeave={menuBtnLeave}
+          >
+            Kariyer Dosyam
+          </button>
+
+          {/* Nasıl Oynanır */}
+          <button
+            onClick={() => alert("Rehber yakında eklenecek!")}
+            style={{ ...menuBtnStyle, animation: "menuItemIn 0.4s ease-out 0.5s both" }}
+            onMouseDown={menuBtnDown} onMouseUp={menuBtnUp}
+            onMouseEnter={menuBtnEnter} onMouseLeave={menuBtnLeave}
+          >
+            Nasıl Oynanır?
+          </button>
+
+          {/* Ayarlar */}
           <button
             onClick={() => setShowSettings(true)}
-            style={{
-              padding: "12px 24px", borderRadius: 14,
-              border: "2px solid rgba(231,76,60,0.3)", background: "rgba(231,76,60,0.05)",
-              color: "#c9d1d9", fontWeight: 700, fontSize: 13, cursor: "pointer",
-              transition: "transform 0.1s, background 0.2s",
-            }}
-            onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
-            onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(231,76,60,0.12)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(231,76,60,0.05)"; }}
+            style={{ ...menuBtnStyle, animation: "menuItemIn 0.4s ease-out 0.6s both" }}
+            onMouseDown={menuBtnDown} onMouseUp={menuBtnUp}
+            onMouseEnter={menuBtnEnter} onMouseLeave={menuBtnLeave}
           >
             Ayarlar
           </button>
+
+          {/* Debug Mode — sarı şeritli özel buton */}
           <button
             onClick={() => setScene("DEBUG_DEPT_SELECT")}
             style={{
-              padding: "10px 24px", borderRadius: 14,
-              border: "2px solid rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)",
-              color: "#f59e0b", fontWeight: 700, fontSize: 12, cursor: "pointer",
-              transition: "transform 0.1s, background 0.2s",
+              width: "85%", margin: "0 auto", padding: "7px 14px", borderRadius: 14, cursor: "pointer",
+              fontFamily: "'Segoe UI', system-ui, sans-serif",
+              fontWeight: 900, fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase",
+              color: "#4a3800",
+              background: "repeating-linear-gradient(135deg, #f59e0b 0px, #f59e0b 8px, #d97706 8px, #d97706 16px)",
+              border: "3px solid #92400e",
+              boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+              transition: "transform 0.1s, background 0.15s, border-color 0.15s, box-shadow 0.15s",
+              animation: "menuItemIn 0.4s ease-out 0.7s both",
             }}
-            onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
-            onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(245,158,11,0.15)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(245,158,11,0.08)"; }}
+            onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.3)"; }}
+            onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "repeating-linear-gradient(135deg, #b57a08 0px, #b57a08 8px, #9a5504 8px, #9a5504 16px)"; e.currentTarget.style.borderColor = "#5c2806"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.25)"; e.currentTarget.style.background = "repeating-linear-gradient(135deg, #f59e0b 0px, #f59e0b 8px, #d97706 8px, #d97706 16px)"; e.currentTarget.style.borderColor = "#92400e"; }}
           >
-            🛠️ Test Modu (Debug)
+            DEBUG MODE
           </button>
         </div>
 
+        {/* Personal Best Card */}
         {personalBest.maxDay > 0 && (
           <div style={{
-            marginTop: 16, background: "#21262d", borderRadius: 10,
-            padding: "10px 16px", border: "1px solid #30363d", width: "100%",
+            marginTop: 14, background: "rgba(0,0,0,0.4)", borderRadius: 12,
+            padding: "8px 14px", border: "2px solid rgba(231,76,60,0.25)", width: "100%",
+            animation: "menuItemIn 0.4s ease-out 0.8s both",
           }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#8b949e", marginBottom: 6 }}>
-              🏆 Kişisel En İyiler
+            <div style={{ display: "flex", justifyContent: "center", gap: 16, fontSize: 11, color: "#c9d1d9" }}>
+              <span>💰 <b style={{ color: "#f1c40f" }}>{personalBest.maxMoney}</b> GP</span>
+              <span>📅 Gün <b style={{ color: "#58a6ff" }}>{personalBest.maxDay}</b></span>
+              <span>⭐ <b style={{ color: "#3fb950" }}>{personalBest.totalPerfect}</b></span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#c9d1d9", padding: "3px 0" }}>
-              <span>💰 En Zengin</span>
-              <span style={{ color: "#f1c40f", fontWeight: 700 }}>{personalBest.maxMoney} GP</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#c9d1d9", padding: "3px 0" }}>
-              <span>📅 En Uzun</span>
-              <span style={{ color: "#58a6ff", fontWeight: 700 }}>Gün {personalBest.maxDay}</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#c9d1d9", padding: "3px 0" }}>
-              <span>⭐ Mükemmel İş</span>
-              <span style={{ color: "#3fb950", fontWeight: 700 }}>{personalBest.totalPerfect}</span>
-            </div>
-            {personalBest.allItemsDay && (
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#c9d1d9", padding: "3px 0" }}>
-                <span>🛒 Tüm Eşyalar</span>
-                <span style={{ color: "#bc8cff", fontWeight: 700 }}>Gün {personalBest.allItemsDay}</span>
-              </div>
-            )}
           </div>
         )}
 
-        <div style={{ marginTop: 24, fontSize: 9, color: "#30363d" }}>v0.9 · Debug Mode Update</div>
+        {/* Footer */}
+        <div style={{ marginTop: 16, animation: "menuItemIn 0.4s ease-out 0.9s both" }}>
+          <div style={{ fontSize: 10, color: "#5c5c5c" }}>v1.0</div>
+          <div style={{ fontSize: 9, color: "#444", marginTop: 2 }}>developed by Yiğit Kasap (Novament Games)</div>
+        </div>
       </div>
+
+      {/* Yeni Oyun Onay Popup */}
+      {showNewGameConfirm && (
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 10,
+          background: "rgba(0,0,0,0.85)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <div style={{
+            background: "#161b22", borderRadius: 16, padding: 24,
+            border: "1px solid #30363d", width: 280, textAlign: "center",
+            animation: "popIn 0.25s ease-out",
+          }}>
+            <div style={{ fontSize: 20, marginBottom: 8 }}>⚠️</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#fff", marginBottom: 8 }}>
+              Mevcut Kayıt Silinecek
+            </div>
+            <div style={{ fontSize: 12, color: "#8b949e", marginBottom: 20, lineHeight: 1.5 }}>
+              Gün {saveInfo?.day} kaydın var. Yeni oyun başlatırsan bu kayıt silinecek.
+            </div>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                onClick={() => setShowNewGameConfirm(false)}
+                style={{
+                  flex: 1, padding: "10px 0", borderRadius: 10,
+                  border: "2px solid #555", background: "#444",
+                  color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer",
+                  transition: "transform 0.1s, background 0.15s",
+                }}
+                onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; }}
+                onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#333"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.background = "#444"; }}
+              >
+                İptal
+              </button>
+              <button
+                onClick={() => {
+                  deleteSaveData();
+                  setShowNewGameConfirm(false);
+                  setSaveInfo(null);
+                  setScene("DEPT_SELECT");
+                }}
+                style={{
+                  flex: 1, padding: "10px 0", borderRadius: 10,
+                  border: "2px solid #a93226",
+                  background: "#e74c3c",
+                  color: "#fff", fontWeight: 800, fontSize: 13, cursor: "pointer",
+                  transition: "transform 0.1s, background 0.15s",
+                }}
+                onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.95)"; }}
+                onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#c0392b"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.background = "#e74c3c"; }}
+              >
+                Yeni Oyun Başlat
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -4719,34 +5403,46 @@ export default function OfficeSimulator() {
         Her departmanın kendine özel görevleri ve mini-oyunları var
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%", maxWidth: 420 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "100%", maxWidth: 420 }}>
         {DEPARTMENTS.map((dept) => (
           <div
             key={dept.id}
             onClick={() => dept.available && handleDeptSelect(dept)}
+            onMouseEnter={(e) => {
+              if (!dept.available) return;
+              e.currentTarget.style.borderColor = dept.color;
+              e.currentTarget.style.boxShadow = `0 0 16px ${dept.color}50, 0 0 32px ${dept.color}20`;
+              e.currentTarget.style.background = `${dept.color}10`;
+            }}
+            onMouseLeave={(e) => {
+              if (!dept.available) return;
+              e.currentTarget.style.borderColor = dept.color + "40";
+              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.background = "#161b22";
+            }}
             style={{
               background: dept.available ? "#161b22" : "#0d1117",
               border: `2px solid ${dept.available ? dept.color + "40" : "#21262d"}`,
-              borderRadius: 12, padding: "10px 12px", cursor: dept.available ? "pointer" : "not-allowed",
-              opacity: dept.available ? 1 : 0.45, transition: "all 0.2s",
-              display: "flex", alignItems: "center", gap: 10,
+              borderRadius: 14, padding: "16px 18px", cursor: dept.available ? "pointer" : "not-allowed",
+              opacity: dept.available ? 1 : 0.45, transition: "all 0.25s ease-out",
+              display: "flex", alignItems: "center", gap: 14,
             }}
           >
             <div
               style={{
-                width: 36, height: 36, borderRadius: 10,
+                width: 44, height: 44, borderRadius: 12,
                 background: dept.available ? `${dept.color}20` : "#21262d",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 18, flexShrink: 0,
+                fontSize: 22, flexShrink: 0,
               }}
             >
               {dept.icon}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 13, fontWeight: 800, color: dept.available ? dept.color : "#484f58" }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: dept.available ? dept.color : "#484f58" }}>
                 {dept.name}
               </div>
-              <div style={{ fontSize: 9, color: dept.available ? dept.color : "#484f58", fontWeight: 600, marginTop: 2 }}>
+              <div style={{ fontSize: 10, color: dept.available ? "#8b949e" : "#484f58", fontWeight: 600, marginTop: 3 }}>
                 {dept.skills}
               </div>
             </div>
@@ -5034,9 +5730,22 @@ export default function OfficeSimulator() {
           }}
         />
       )}
+      {/* Save Toast */}
+      {showSaveToast && (
+        <div style={{
+          position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)",
+          background: "#238636", color: "#fff", padding: "8px 20px", borderRadius: 20,
+          fontSize: 13, fontWeight: 700, zIndex: 999,
+          animation: "saveToastIn 0.2s ease-out",
+          pointerEvents: "none",
+        }}>
+          Kaydedildi
+        </div>
+      )}
       <style>{`
         @keyframes slideIn { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes characterIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes characterOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(30px); } }
         @keyframes breathe { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.006); } }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes popIn { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -5054,6 +5763,39 @@ export default function OfficeSimulator() {
         @keyframes flyToVault {
           0% { transform: translate(0, 0) scale(1); opacity: 1; }
           100% { transform: translate(150px, -300px) scale(0.5); opacity: 0; }
+        }
+        @keyframes sparkleAnim {
+          0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+          50% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+          100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+        }
+        @keyframes angerPop {
+          0% { transform: scale(0); opacity: 0; }
+          60% { transform: scale(1.4); opacity: 1; }
+          100% { transform: scale(1); opacity: 0.95; }
+        }
+        @keyframes sadShake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-6px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(4px); }
+        }
+        @keyframes menuItemIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes logoFloat {
+          from { transform: translateY(0); }
+          to { transform: translateY(-4px); }
+        }
+        @keyframes saveToastIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes saveToastOut {
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(20px); }
         }
 
         *::-webkit-scrollbar { width: 6px; }
